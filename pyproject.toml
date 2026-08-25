@@ -27,6 +27,10 @@ dependencies = [
 ]
 
 [project.urls]
+Homepage = "https://github.com/andrea-cap/bimets"
+Repository = "https://github.com/andrea-cap/bimets"
+Documentation = "https://github.com/andrea-cap/bimets/blob/master/docs/README.md"
+Issues = "https://github.com/andrea-cap/bimets/issues"
 "Original BIMETS" = "https://github.com/andrea-luciani/bimets"
 
 [dependency-groups]

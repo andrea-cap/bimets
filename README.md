@@ -1,5 +1,8 @@
 # bimets — Time-Series Analysis and Econometric Modeling in Python
 
+[![CI](https://github.com/andrea-cap/bimets/actions/workflows/ci.yml/badge.svg?branch=master)](https://github.com/andrea-cap/bimets/actions/workflows/ci.yml)
+[![PyPI downloads](https://api.pepy.tech/badge/bimets)](https://pepy.tech/project/bimets)
+
 **bimets** is a Python port of the
 [BIMETS R package](https://github.com/andrea-luciani/bimets) for regular
 time-series analysis and econometric modeling. It covers time-series
@@ -10,7 +13,8 @@ manipulation, parsing of Model Description Language (MDL), estimation, and deter
 The library keeps all the underlying mathematical behavior of
 BIMETS but introduces some design differences due to the Python ecosystem, such as immutable objects, explicit inputs, NumPy-based storage and pandas interoperability.
 
-See [Migration from R](docs/explanation/migration-from-r.md) for a detailed comparison.
+See [Migration from R](https://github.com/andrea-cap/bimets/blob/master/docs/explanation/migration-from-r.md)
+for a detailed comparison.
 
 ## Main features
 
@@ -126,13 +130,13 @@ Individual series support BIMETS-compatible year-period and date indexing,
 with immutable replacements through `with_values()`:
 
 ```python
-gdp[[2020, 2]]          # 102.0
-gdp["2020-04/2020-09"] # inclusive date range
+gdp[[2020, 2]]  # 102.0
+gdp["2020-04/2020-09"]  # inclusive date range
 
 revised_gdp = gdp.with_values([[2020, 2], [2020, 3]], [103, 106])
 ```
 
-The [time-series tutorial](docs/tutorial/02.timeseries.md) covers
+The [time-series tutorial](https://github.com/andrea-cap/bimets/blob/master/docs/tutorial/02.timeseries.md) covers
 calendar inspection, cumulative ranges, conversion, tabular display, and CSV
 exchange.
 
@@ -149,8 +153,10 @@ Compatible BIMETS R function names are also exported with their original,
 case-sensitive spelling. Most are uppercase; `date2yp` and `normalizeYP`
 retain their mixed-case names as in the R implementation. These aliases reference the canonical Python
 functions and retain their Python signatures. See the [public API
-inventory](docs/reference/api.md) for the complete alias mapping and the
-[time-series API reference](docs/reference/timeseries.md) for constructor,
+inventory](https://github.com/andrea-cap/bimets/blob/master/docs/reference/api.md)
+for the complete alias mapping and the
+[time-series API reference](https://github.com/andrea-cap/bimets/blob/master/docs/reference/timeseries.md)
+for constructor,
 function, and method signatures.
 
 A small MDL model can be parsed and simulated directly:
@@ -185,17 +191,17 @@ result["y"].values.tolist()
 
 | Topic | Documentation |
 |---|---|
-| Index of detailed documentation | [Documentation](docs/README.md) |
-| All tutorials | [Tutorial index](docs/tutorial/README.md) |
-| Time-series construction, access, and indexing | [Time-series tutorial](docs/tutorial/02.timeseries.md) |
-| Time-series manipulation | [Manipulating time series](docs/tutorial/03.manipulating-timeseries.md) |
-| MDL, estimation, and simulation guides | [MDL](docs/tutorial/05.mdl.md) · [Estimation](docs/tutorial/06.estimation.md) · [Simulation](docs/tutorial/07.simulation.md) |
-| API documentation | [API reference](docs/reference/README.md) |
-| Public symbols and R aliases | [API inventory](docs/reference/api.md) |
-| Conceptual and API differences from R | [Migration from BIMETS R](docs/explanation/migration-from-r.md) |
-| Solver architecture, vectorization, and multiprocessing | [Solver strategies](docs/explanation/solver-strategies.md) |
-| Compatibility and numerical validation | [Conformance page](docs/explanation/conformance.md) |
-| Reproducible public examples | [`examples/`](examples/) |
+| Index of detailed documentation | [Documentation](https://github.com/andrea-cap/bimets/blob/master/docs/README.md) |
+| All tutorials | [Tutorial index](https://github.com/andrea-cap/bimets/blob/master/docs/tutorial/README.md) |
+| Time-series construction, access, and indexing | [Time-series tutorial](https://github.com/andrea-cap/bimets/blob/master/docs/tutorial/02.timeseries.md) |
+| Time-series manipulation | [Manipulating time series](https://github.com/andrea-cap/bimets/blob/master/docs/tutorial/03.manipulating-timeseries.md) |
+| MDL, estimation, and simulation guides | [MDL](https://github.com/andrea-cap/bimets/blob/master/docs/tutorial/05.mdl.md) · [Estimation](https://github.com/andrea-cap/bimets/blob/master/docs/tutorial/06.estimation.md) · [Simulation](https://github.com/andrea-cap/bimets/blob/master/docs/tutorial/07.simulation.md) |
+| API documentation | [API reference](https://github.com/andrea-cap/bimets/blob/master/docs/reference/README.md) |
+| Public symbols and R aliases | [API inventory](https://github.com/andrea-cap/bimets/blob/master/docs/reference/api.md) |
+| Conceptual and API differences from R | [Migration from BIMETS R](https://github.com/andrea-cap/bimets/blob/master/docs/explanation/migration-from-r.md) |
+| Solver architecture, vectorization, and multiprocessing | [Solver strategies](https://github.com/andrea-cap/bimets/blob/master/docs/explanation/solver-strategies.md) |
+| Compatibility and numerical validation | [Conformance page](https://github.com/andrea-cap/bimets/blob/master/docs/explanation/conformance.md) |
+| Reproducible public examples | [`examples/`](https://github.com/andrea-cap/bimets/tree/master/examples) |
 
 
 ## Origin, copyright, and license
@@ -210,8 +216,9 @@ The port is based on BIMETS 4.1.2. It includes adaptations of concepts, interfac
 respective contributors unless otherwise agreed.
 
 The complete Python distribution is licensed under the
-[GNU General Public License, version 3 or later](LICENSE). See
-[NOTICE](NOTICE) for the full attribution and modification notice.
+[GNU General Public License, version 3 or later](https://github.com/andrea-cap/bimets/blob/master/LICENSE).
+See [NOTICE](https://github.com/andrea-cap/bimets/blob/master/NOTICE) for the
+full attribution and modification notice.
 
 The names BIMETS and Bank of Italy are used for attribution and identification
 of compatibility. This project does not imply endorsement by the original
