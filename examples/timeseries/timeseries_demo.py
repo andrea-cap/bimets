@@ -386,9 +386,15 @@ def main() -> None:
     # MV=FALSE in the R example corresponds to retaining the univariate result;
     # the Python API expresses the effective missing-value rule explicitly.
     sum_merge = TSMERGE(first_series, second_series, method="SUM", skip_missing=True)
-    average_merge = TSMERGE(first_series, second_series, method="AVE", skip_missing=True)
-    maximum_merge = TSMERGE(first_series, second_series, method="MAX", skip_missing=True)
-    minimum_merge = TSMERGE(first_series, second_series, method="MIN", skip_missing=True)
+    average_merge = TSMERGE(
+        first_series, second_series, method="AVE", skip_missing=True
+    )
+    maximum_merge = TSMERGE(
+        first_series, second_series, method="MAX", skip_missing=True
+    )
+    minimum_merge = TSMERGE(
+        first_series, second_series, method="MIN", skip_missing=True
+    )
 
     show_table(
         first_series,
@@ -398,7 +404,15 @@ def main() -> None:
         average_merge,
         maximum_merge,
         minimum_merge,
-        headers=("first_series", "second_series", "priority", "sum", "average", "max", "min"),
+        headers=(
+            "first_series",
+            "second_series",
+            "priority",
+            "sum",
+            "average",
+            "max",
+            "min",
+        ),
     )
 
     # ---- Rebasing ------------------------------------------------------------
@@ -550,10 +564,7 @@ def main() -> None:
     assert is_bimets(annual_to_monthly)
     assert csv_file.exists()
 
-    print(
-        "\nExecution completed.\n"
-        f"Output available at:\n{csv_file}"
-    )
+    print(f"\nExecution completed.\nOutput available at:\n{csv_file}")
 
 
 if __name__ == "__main__":
