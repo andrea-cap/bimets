@@ -1,6 +1,6 @@
 [project]
 name = "bimets"
-version = "1.0.0"
+version = "1.0.1"
 description = "Time-series analysis and econometric modelling in Python"
 readme = "README.md"
 requires-python = ">=3.12"
@@ -47,7 +47,7 @@ requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [tool.bumpversion]
-current_version = "1.0.0"
+current_version = "1.0.1"
 commit = false
 tag = false
 
