@@ -1,0 +1,1568 @@
+MODEL
+
+$ Synthetic conditional policy system
+
+IDENTITY> y001
+EQ> y001 = 0.35*TSLAG(y001) + 0.10*p001 + 0.01*aggregate + x001
+
+IDENTITY> p001
+EQ> p001 = 0.15*y001 + cost001
+
+IDENTITY> cap001
+EQ> cap001 = y001
+IF> regime001 > 0
+IDENTITY> cap001
+EQ> cap001 = 0.8*y001
+IF> regime001 <= 0
+
+IDENTITY> y002
+EQ> y002 = 0.35*TSLAG(y002) + 0.10*p002 + 0.01*aggregate + x002
+
+IDENTITY> p002
+EQ> p002 = 0.15*y002 + cost002
+
+IDENTITY> cap002
+EQ> cap002 = y002
+IF> regime002 > 0
+IDENTITY> cap002
+EQ> cap002 = 0.8*y002
+IF> regime002 <= 0
+
+IDENTITY> y003
+EQ> y003 = 0.35*TSLAG(y003) + 0.10*p003 + 0.01*aggregate + x003
+
+IDENTITY> p003
+EQ> p003 = 0.15*y003 + cost003
+
+IDENTITY> cap003
+EQ> cap003 = y003
+IF> regime003 > 0
+IDENTITY> cap003
+EQ> cap003 = 0.8*y003
+IF> regime003 <= 0
+
+IDENTITY> y004
+EQ> y004 = 0.35*TSLAG(y004) + 0.10*p004 + 0.01*aggregate + x004
+
+IDENTITY> p004
+EQ> p004 = 0.15*y004 + cost004
+
+IDENTITY> cap004
+EQ> cap004 = y004
+IF> regime004 > 0
+IDENTITY> cap004
+EQ> cap004 = 0.8*y004
+IF> regime004 <= 0
+
+IDENTITY> y005
+EQ> y005 = 0.35*TSLAG(y005) + 0.10*p005 + 0.01*aggregate + x005
+
+IDENTITY> p005
+EQ> p005 = 0.15*y005 + cost005
+
+IDENTITY> cap005
+EQ> cap005 = y005
+IF> regime005 > 0
+IDENTITY> cap005
+EQ> cap005 = 0.8*y005
+IF> regime005 <= 0
+
+IDENTITY> y006
+EQ> y006 = 0.35*TSLAG(y006) + 0.10*p006 + 0.01*aggregate + x006
+
+IDENTITY> p006
+EQ> p006 = 0.15*y006 + cost006
+
+IDENTITY> cap006
+EQ> cap006 = y006
+IF> regime006 > 0
+IDENTITY> cap006
+EQ> cap006 = 0.8*y006
+IF> regime006 <= 0
+
+IDENTITY> y007
+EQ> y007 = 0.35*TSLAG(y007) + 0.10*p007 + 0.01*aggregate + x007
+
+IDENTITY> p007
+EQ> p007 = 0.15*y007 + cost007
+
+IDENTITY> cap007
+EQ> cap007 = y007
+IF> regime007 > 0
+IDENTITY> cap007
+EQ> cap007 = 0.8*y007
+IF> regime007 <= 0
+
+IDENTITY> y008
+EQ> y008 = 0.35*TSLAG(y008) + 0.10*p008 + 0.01*aggregate + x008
+
+IDENTITY> p008
+EQ> p008 = 0.15*y008 + cost008
+
+IDENTITY> cap008
+EQ> cap008 = y008
+IF> regime008 > 0
+IDENTITY> cap008
+EQ> cap008 = 0.8*y008
+IF> regime008 <= 0
+
+IDENTITY> y009
+EQ> y009 = 0.35*TSLAG(y009) + 0.10*p009 + 0.01*aggregate + x009
+
+IDENTITY> p009
+EQ> p009 = 0.15*y009 + cost009
+
+IDENTITY> cap009
+EQ> cap009 = y009
+IF> regime009 > 0
+IDENTITY> cap009
+EQ> cap009 = 0.8*y009
+IF> regime009 <= 0
+
+IDENTITY> y010
+EQ> y010 = 0.35*TSLAG(y010) + 0.10*p010 + 0.01*aggregate + x010
+
+IDENTITY> p010
+EQ> p010 = 0.15*y010 + cost010
+
+IDENTITY> cap010
+EQ> cap010 = y010
+IF> regime010 > 0
+IDENTITY> cap010
+EQ> cap010 = 0.8*y010
+IF> regime010 <= 0
+
+IDENTITY> y011
+EQ> y011 = 0.35*TSLAG(y011) + 0.10*p011 + 0.01*aggregate + x011
+
+IDENTITY> p011
+EQ> p011 = 0.15*y011 + cost011
+
+IDENTITY> cap011
+EQ> cap011 = y011
+IF> regime011 > 0
+IDENTITY> cap011
+EQ> cap011 = 0.8*y011
+IF> regime011 <= 0
+
+IDENTITY> y012
+EQ> y012 = 0.35*TSLAG(y012) + 0.10*p012 + 0.01*aggregate + x012
+
+IDENTITY> p012
+EQ> p012 = 0.15*y012 + cost012
+
+IDENTITY> cap012
+EQ> cap012 = y012
+IF> regime012 > 0
+IDENTITY> cap012
+EQ> cap012 = 0.8*y012
+IF> regime012 <= 0
+
+IDENTITY> y013
+EQ> y013 = 0.35*TSLAG(y013) + 0.10*p013 + 0.01*aggregate + x013
+
+IDENTITY> p013
+EQ> p013 = 0.15*y013 + cost013
+
+IDENTITY> cap013
+EQ> cap013 = y013
+IF> regime013 > 0
+IDENTITY> cap013
+EQ> cap013 = 0.8*y013
+IF> regime013 <= 0
+
+IDENTITY> y014
+EQ> y014 = 0.35*TSLAG(y014) + 0.10*p014 + 0.01*aggregate + x014
+
+IDENTITY> p014
+EQ> p014 = 0.15*y014 + cost014
+
+IDENTITY> cap014
+EQ> cap014 = y014
+IF> regime014 > 0
+IDENTITY> cap014
+EQ> cap014 = 0.8*y014
+IF> regime014 <= 0
+
+IDENTITY> y015
+EQ> y015 = 0.35*TSLAG(y015) + 0.10*p015 + 0.01*aggregate + x015
+
+IDENTITY> p015
+EQ> p015 = 0.15*y015 + cost015
+
+IDENTITY> cap015
+EQ> cap015 = y015
+IF> regime015 > 0
+IDENTITY> cap015
+EQ> cap015 = 0.8*y015
+IF> regime015 <= 0
+
+IDENTITY> y016
+EQ> y016 = 0.35*TSLAG(y016) + 0.10*p016 + 0.01*aggregate + x016
+
+IDENTITY> p016
+EQ> p016 = 0.15*y016 + cost016
+
+IDENTITY> cap016
+EQ> cap016 = y016
+IF> regime016 > 0
+IDENTITY> cap016
+EQ> cap016 = 0.8*y016
+IF> regime016 <= 0
+
+IDENTITY> y017
+EQ> y017 = 0.35*TSLAG(y017) + 0.10*p017 + 0.01*aggregate + x017
+
+IDENTITY> p017
+EQ> p017 = 0.15*y017 + cost017
+
+IDENTITY> cap017
+EQ> cap017 = y017
+IF> regime017 > 0
+IDENTITY> cap017
+EQ> cap017 = 0.8*y017
+IF> regime017 <= 0
+
+IDENTITY> y018
+EQ> y018 = 0.35*TSLAG(y018) + 0.10*p018 + 0.01*aggregate + x018
+
+IDENTITY> p018
+EQ> p018 = 0.15*y018 + cost018
+
+IDENTITY> cap018
+EQ> cap018 = y018
+IF> regime018 > 0
+IDENTITY> cap018
+EQ> cap018 = 0.8*y018
+IF> regime018 <= 0
+
+IDENTITY> y019
+EQ> y019 = 0.35*TSLAG(y019) + 0.10*p019 + 0.01*aggregate + x019
+
+IDENTITY> p019
+EQ> p019 = 0.15*y019 + cost019
+
+IDENTITY> cap019
+EQ> cap019 = y019
+IF> regime019 > 0
+IDENTITY> cap019
+EQ> cap019 = 0.8*y019
+IF> regime019 <= 0
+
+IDENTITY> y020
+EQ> y020 = 0.35*TSLAG(y020) + 0.10*p020 + 0.01*aggregate + x020
+
+IDENTITY> p020
+EQ> p020 = 0.15*y020 + cost020
+
+IDENTITY> cap020
+EQ> cap020 = y020
+IF> regime020 > 0
+IDENTITY> cap020
+EQ> cap020 = 0.8*y020
+IF> regime020 <= 0
+
+IDENTITY> y021
+EQ> y021 = 0.35*TSLAG(y021) + 0.10*p021 + 0.01*aggregate + x021
+
+IDENTITY> p021
+EQ> p021 = 0.15*y021 + cost021
+
+IDENTITY> cap021
+EQ> cap021 = y021
+IF> regime021 > 0
+IDENTITY> cap021
+EQ> cap021 = 0.8*y021
+IF> regime021 <= 0
+
+IDENTITY> y022
+EQ> y022 = 0.35*TSLAG(y022) + 0.10*p022 + 0.01*aggregate + x022
+
+IDENTITY> p022
+EQ> p022 = 0.15*y022 + cost022
+
+IDENTITY> cap022
+EQ> cap022 = y022
+IF> regime022 > 0
+IDENTITY> cap022
+EQ> cap022 = 0.8*y022
+IF> regime022 <= 0
+
+IDENTITY> y023
+EQ> y023 = 0.35*TSLAG(y023) + 0.10*p023 + 0.01*aggregate + x023
+
+IDENTITY> p023
+EQ> p023 = 0.15*y023 + cost023
+
+IDENTITY> cap023
+EQ> cap023 = y023
+IF> regime023 > 0
+IDENTITY> cap023
+EQ> cap023 = 0.8*y023
+IF> regime023 <= 0
+
+IDENTITY> y024
+EQ> y024 = 0.35*TSLAG(y024) + 0.10*p024 + 0.01*aggregate + x024
+
+IDENTITY> p024
+EQ> p024 = 0.15*y024 + cost024
+
+IDENTITY> cap024
+EQ> cap024 = y024
+IF> regime024 > 0
+IDENTITY> cap024
+EQ> cap024 = 0.8*y024
+IF> regime024 <= 0
+
+IDENTITY> y025
+EQ> y025 = 0.35*TSLAG(y025) + 0.10*p025 + 0.01*aggregate + x025
+
+IDENTITY> p025
+EQ> p025 = 0.15*y025 + cost025
+
+IDENTITY> cap025
+EQ> cap025 = y025
+IF> regime025 > 0
+IDENTITY> cap025
+EQ> cap025 = 0.8*y025
+IF> regime025 <= 0
+
+IDENTITY> y026
+EQ> y026 = 0.35*TSLAG(y026) + 0.10*p026 + 0.01*aggregate + x026
+
+IDENTITY> p026
+EQ> p026 = 0.15*y026 + cost026
+
+IDENTITY> cap026
+EQ> cap026 = y026
+IF> regime026 > 0
+IDENTITY> cap026
+EQ> cap026 = 0.8*y026
+IF> regime026 <= 0
+
+IDENTITY> y027
+EQ> y027 = 0.35*TSLAG(y027) + 0.10*p027 + 0.01*aggregate + x027
+
+IDENTITY> p027
+EQ> p027 = 0.15*y027 + cost027
+
+IDENTITY> cap027
+EQ> cap027 = y027
+IF> regime027 > 0
+IDENTITY> cap027
+EQ> cap027 = 0.8*y027
+IF> regime027 <= 0
+
+IDENTITY> y028
+EQ> y028 = 0.35*TSLAG(y028) + 0.10*p028 + 0.01*aggregate + x028
+
+IDENTITY> p028
+EQ> p028 = 0.15*y028 + cost028
+
+IDENTITY> cap028
+EQ> cap028 = y028
+IF> regime028 > 0
+IDENTITY> cap028
+EQ> cap028 = 0.8*y028
+IF> regime028 <= 0
+
+IDENTITY> y029
+EQ> y029 = 0.35*TSLAG(y029) + 0.10*p029 + 0.01*aggregate + x029
+
+IDENTITY> p029
+EQ> p029 = 0.15*y029 + cost029
+
+IDENTITY> cap029
+EQ> cap029 = y029
+IF> regime029 > 0
+IDENTITY> cap029
+EQ> cap029 = 0.8*y029
+IF> regime029 <= 0
+
+IDENTITY> y030
+EQ> y030 = 0.35*TSLAG(y030) + 0.10*p030 + 0.01*aggregate + x030
+
+IDENTITY> p030
+EQ> p030 = 0.15*y030 + cost030
+
+IDENTITY> cap030
+EQ> cap030 = y030
+IF> regime030 > 0
+IDENTITY> cap030
+EQ> cap030 = 0.8*y030
+IF> regime030 <= 0
+
+IDENTITY> y031
+EQ> y031 = 0.35*TSLAG(y031) + 0.10*p031 + 0.01*aggregate + x031
+
+IDENTITY> p031
+EQ> p031 = 0.15*y031 + cost031
+
+IDENTITY> cap031
+EQ> cap031 = y031
+IF> regime031 > 0
+IDENTITY> cap031
+EQ> cap031 = 0.8*y031
+IF> regime031 <= 0
+
+IDENTITY> y032
+EQ> y032 = 0.35*TSLAG(y032) + 0.10*p032 + 0.01*aggregate + x032
+
+IDENTITY> p032
+EQ> p032 = 0.15*y032 + cost032
+
+IDENTITY> cap032
+EQ> cap032 = y032
+IF> regime032 > 0
+IDENTITY> cap032
+EQ> cap032 = 0.8*y032
+IF> regime032 <= 0
+
+IDENTITY> y033
+EQ> y033 = 0.35*TSLAG(y033) + 0.10*p033 + 0.01*aggregate + x033
+
+IDENTITY> p033
+EQ> p033 = 0.15*y033 + cost033
+
+IDENTITY> cap033
+EQ> cap033 = y033
+IF> regime033 > 0
+IDENTITY> cap033
+EQ> cap033 = 0.8*y033
+IF> regime033 <= 0
+
+IDENTITY> y034
+EQ> y034 = 0.35*TSLAG(y034) + 0.10*p034 + 0.01*aggregate + x034
+
+IDENTITY> p034
+EQ> p034 = 0.15*y034 + cost034
+
+IDENTITY> cap034
+EQ> cap034 = y034
+IF> regime034 > 0
+IDENTITY> cap034
+EQ> cap034 = 0.8*y034
+IF> regime034 <= 0
+
+IDENTITY> y035
+EQ> y035 = 0.35*TSLAG(y035) + 0.10*p035 + 0.01*aggregate + x035
+
+IDENTITY> p035
+EQ> p035 = 0.15*y035 + cost035
+
+IDENTITY> cap035
+EQ> cap035 = y035
+IF> regime035 > 0
+IDENTITY> cap035
+EQ> cap035 = 0.8*y035
+IF> regime035 <= 0
+
+IDENTITY> y036
+EQ> y036 = 0.35*TSLAG(y036) + 0.10*p036 + 0.01*aggregate + x036
+
+IDENTITY> p036
+EQ> p036 = 0.15*y036 + cost036
+
+IDENTITY> cap036
+EQ> cap036 = y036
+IF> regime036 > 0
+IDENTITY> cap036
+EQ> cap036 = 0.8*y036
+IF> regime036 <= 0
+
+IDENTITY> y037
+EQ> y037 = 0.35*TSLAG(y037) + 0.10*p037 + 0.01*aggregate + x037
+
+IDENTITY> p037
+EQ> p037 = 0.15*y037 + cost037
+
+IDENTITY> cap037
+EQ> cap037 = y037
+IF> regime037 > 0
+IDENTITY> cap037
+EQ> cap037 = 0.8*y037
+IF> regime037 <= 0
+
+IDENTITY> y038
+EQ> y038 = 0.35*TSLAG(y038) + 0.10*p038 + 0.01*aggregate + x038
+
+IDENTITY> p038
+EQ> p038 = 0.15*y038 + cost038
+
+IDENTITY> cap038
+EQ> cap038 = y038
+IF> regime038 > 0
+IDENTITY> cap038
+EQ> cap038 = 0.8*y038
+IF> regime038 <= 0
+
+IDENTITY> y039
+EQ> y039 = 0.35*TSLAG(y039) + 0.10*p039 + 0.01*aggregate + x039
+
+IDENTITY> p039
+EQ> p039 = 0.15*y039 + cost039
+
+IDENTITY> cap039
+EQ> cap039 = y039
+IF> regime039 > 0
+IDENTITY> cap039
+EQ> cap039 = 0.8*y039
+IF> regime039 <= 0
+
+IDENTITY> y040
+EQ> y040 = 0.35*TSLAG(y040) + 0.10*p040 + 0.01*aggregate + x040
+
+IDENTITY> p040
+EQ> p040 = 0.15*y040 + cost040
+
+IDENTITY> cap040
+EQ> cap040 = y040
+IF> regime040 > 0
+IDENTITY> cap040
+EQ> cap040 = 0.8*y040
+IF> regime040 <= 0
+
+IDENTITY> y041
+EQ> y041 = 0.35*TSLAG(y041) + 0.10*p041 + 0.01*aggregate + x041
+
+IDENTITY> p041
+EQ> p041 = 0.15*y041 + cost041
+
+IDENTITY> cap041
+EQ> cap041 = y041
+IF> regime041 > 0
+IDENTITY> cap041
+EQ> cap041 = 0.8*y041
+IF> regime041 <= 0
+
+IDENTITY> y042
+EQ> y042 = 0.35*TSLAG(y042) + 0.10*p042 + 0.01*aggregate + x042
+
+IDENTITY> p042
+EQ> p042 = 0.15*y042 + cost042
+
+IDENTITY> cap042
+EQ> cap042 = y042
+IF> regime042 > 0
+IDENTITY> cap042
+EQ> cap042 = 0.8*y042
+IF> regime042 <= 0
+
+IDENTITY> y043
+EQ> y043 = 0.35*TSLAG(y043) + 0.10*p043 + 0.01*aggregate + x043
+
+IDENTITY> p043
+EQ> p043 = 0.15*y043 + cost043
+
+IDENTITY> cap043
+EQ> cap043 = y043
+IF> regime043 > 0
+IDENTITY> cap043
+EQ> cap043 = 0.8*y043
+IF> regime043 <= 0
+
+IDENTITY> y044
+EQ> y044 = 0.35*TSLAG(y044) + 0.10*p044 + 0.01*aggregate + x044
+
+IDENTITY> p044
+EQ> p044 = 0.15*y044 + cost044
+
+IDENTITY> cap044
+EQ> cap044 = y044
+IF> regime044 > 0
+IDENTITY> cap044
+EQ> cap044 = 0.8*y044
+IF> regime044 <= 0
+
+IDENTITY> y045
+EQ> y045 = 0.35*TSLAG(y045) + 0.10*p045 + 0.01*aggregate + x045
+
+IDENTITY> p045
+EQ> p045 = 0.15*y045 + cost045
+
+IDENTITY> cap045
+EQ> cap045 = y045
+IF> regime045 > 0
+IDENTITY> cap045
+EQ> cap045 = 0.8*y045
+IF> regime045 <= 0
+
+IDENTITY> y046
+EQ> y046 = 0.35*TSLAG(y046) + 0.10*p046 + 0.01*aggregate + x046
+
+IDENTITY> p046
+EQ> p046 = 0.15*y046 + cost046
+
+IDENTITY> cap046
+EQ> cap046 = y046
+IF> regime046 > 0
+IDENTITY> cap046
+EQ> cap046 = 0.8*y046
+IF> regime046 <= 0
+
+IDENTITY> y047
+EQ> y047 = 0.35*TSLAG(y047) + 0.10*p047 + 0.01*aggregate + x047
+
+IDENTITY> p047
+EQ> p047 = 0.15*y047 + cost047
+
+IDENTITY> cap047
+EQ> cap047 = y047
+IF> regime047 > 0
+IDENTITY> cap047
+EQ> cap047 = 0.8*y047
+IF> regime047 <= 0
+
+IDENTITY> y048
+EQ> y048 = 0.35*TSLAG(y048) + 0.10*p048 + 0.01*aggregate + x048
+
+IDENTITY> p048
+EQ> p048 = 0.15*y048 + cost048
+
+IDENTITY> cap048
+EQ> cap048 = y048
+IF> regime048 > 0
+IDENTITY> cap048
+EQ> cap048 = 0.8*y048
+IF> regime048 <= 0
+
+IDENTITY> y049
+EQ> y049 = 0.35*TSLAG(y049) + 0.10*p049 + 0.01*aggregate + x049
+
+IDENTITY> p049
+EQ> p049 = 0.15*y049 + cost049
+
+IDENTITY> cap049
+EQ> cap049 = y049
+IF> regime049 > 0
+IDENTITY> cap049
+EQ> cap049 = 0.8*y049
+IF> regime049 <= 0
+
+IDENTITY> y050
+EQ> y050 = 0.35*TSLAG(y050) + 0.10*p050 + 0.01*aggregate + x050
+
+IDENTITY> p050
+EQ> p050 = 0.15*y050 + cost050
+
+IDENTITY> cap050
+EQ> cap050 = y050
+IF> regime050 > 0
+IDENTITY> cap050
+EQ> cap050 = 0.8*y050
+IF> regime050 <= 0
+
+IDENTITY> y051
+EQ> y051 = 0.35*TSLAG(y051) + 0.10*p051 + 0.01*aggregate + x051
+
+IDENTITY> p051
+EQ> p051 = 0.15*y051 + cost051
+
+IDENTITY> cap051
+EQ> cap051 = y051
+IF> regime051 > 0
+IDENTITY> cap051
+EQ> cap051 = 0.8*y051
+IF> regime051 <= 0
+
+IDENTITY> y052
+EQ> y052 = 0.35*TSLAG(y052) + 0.10*p052 + 0.01*aggregate + x052
+
+IDENTITY> p052
+EQ> p052 = 0.15*y052 + cost052
+
+IDENTITY> cap052
+EQ> cap052 = y052
+IF> regime052 > 0
+IDENTITY> cap052
+EQ> cap052 = 0.8*y052
+IF> regime052 <= 0
+
+IDENTITY> y053
+EQ> y053 = 0.35*TSLAG(y053) + 0.10*p053 + 0.01*aggregate + x053
+
+IDENTITY> p053
+EQ> p053 = 0.15*y053 + cost053
+
+IDENTITY> cap053
+EQ> cap053 = y053
+IF> regime053 > 0
+IDENTITY> cap053
+EQ> cap053 = 0.8*y053
+IF> regime053 <= 0
+
+IDENTITY> y054
+EQ> y054 = 0.35*TSLAG(y054) + 0.10*p054 + 0.01*aggregate + x054
+
+IDENTITY> p054
+EQ> p054 = 0.15*y054 + cost054
+
+IDENTITY> cap054
+EQ> cap054 = y054
+IF> regime054 > 0
+IDENTITY> cap054
+EQ> cap054 = 0.8*y054
+IF> regime054 <= 0
+
+IDENTITY> y055
+EQ> y055 = 0.35*TSLAG(y055) + 0.10*p055 + 0.01*aggregate + x055
+
+IDENTITY> p055
+EQ> p055 = 0.15*y055 + cost055
+
+IDENTITY> cap055
+EQ> cap055 = y055
+IF> regime055 > 0
+IDENTITY> cap055
+EQ> cap055 = 0.8*y055
+IF> regime055 <= 0
+
+IDENTITY> y056
+EQ> y056 = 0.35*TSLAG(y056) + 0.10*p056 + 0.01*aggregate + x056
+
+IDENTITY> p056
+EQ> p056 = 0.15*y056 + cost056
+
+IDENTITY> cap056
+EQ> cap056 = y056
+IF> regime056 > 0
+IDENTITY> cap056
+EQ> cap056 = 0.8*y056
+IF> regime056 <= 0
+
+IDENTITY> y057
+EQ> y057 = 0.35*TSLAG(y057) + 0.10*p057 + 0.01*aggregate + x057
+
+IDENTITY> p057
+EQ> p057 = 0.15*y057 + cost057
+
+IDENTITY> cap057
+EQ> cap057 = y057
+IF> regime057 > 0
+IDENTITY> cap057
+EQ> cap057 = 0.8*y057
+IF> regime057 <= 0
+
+IDENTITY> y058
+EQ> y058 = 0.35*TSLAG(y058) + 0.10*p058 + 0.01*aggregate + x058
+
+IDENTITY> p058
+EQ> p058 = 0.15*y058 + cost058
+
+IDENTITY> cap058
+EQ> cap058 = y058
+IF> regime058 > 0
+IDENTITY> cap058
+EQ> cap058 = 0.8*y058
+IF> regime058 <= 0
+
+IDENTITY> y059
+EQ> y059 = 0.35*TSLAG(y059) + 0.10*p059 + 0.01*aggregate + x059
+
+IDENTITY> p059
+EQ> p059 = 0.15*y059 + cost059
+
+IDENTITY> cap059
+EQ> cap059 = y059
+IF> regime059 > 0
+IDENTITY> cap059
+EQ> cap059 = 0.8*y059
+IF> regime059 <= 0
+
+IDENTITY> y060
+EQ> y060 = 0.35*TSLAG(y060) + 0.10*p060 + 0.01*aggregate + x060
+
+IDENTITY> p060
+EQ> p060 = 0.15*y060 + cost060
+
+IDENTITY> cap060
+EQ> cap060 = y060
+IF> regime060 > 0
+IDENTITY> cap060
+EQ> cap060 = 0.8*y060
+IF> regime060 <= 0
+
+IDENTITY> y061
+EQ> y061 = 0.35*TSLAG(y061) + 0.10*p061 + 0.01*aggregate + x061
+
+IDENTITY> p061
+EQ> p061 = 0.15*y061 + cost061
+
+IDENTITY> cap061
+EQ> cap061 = y061
+IF> regime061 > 0
+IDENTITY> cap061
+EQ> cap061 = 0.8*y061
+IF> regime061 <= 0
+
+IDENTITY> y062
+EQ> y062 = 0.35*TSLAG(y062) + 0.10*p062 + 0.01*aggregate + x062
+
+IDENTITY> p062
+EQ> p062 = 0.15*y062 + cost062
+
+IDENTITY> cap062
+EQ> cap062 = y062
+IF> regime062 > 0
+IDENTITY> cap062
+EQ> cap062 = 0.8*y062
+IF> regime062 <= 0
+
+IDENTITY> y063
+EQ> y063 = 0.35*TSLAG(y063) + 0.10*p063 + 0.01*aggregate + x063
+
+IDENTITY> p063
+EQ> p063 = 0.15*y063 + cost063
+
+IDENTITY> cap063
+EQ> cap063 = y063
+IF> regime063 > 0
+IDENTITY> cap063
+EQ> cap063 = 0.8*y063
+IF> regime063 <= 0
+
+IDENTITY> y064
+EQ> y064 = 0.35*TSLAG(y064) + 0.10*p064 + 0.01*aggregate + x064
+
+IDENTITY> p064
+EQ> p064 = 0.15*y064 + cost064
+
+IDENTITY> cap064
+EQ> cap064 = y064
+IF> regime064 > 0
+IDENTITY> cap064
+EQ> cap064 = 0.8*y064
+IF> regime064 <= 0
+
+IDENTITY> y065
+EQ> y065 = 0.35*TSLAG(y065) + 0.10*p065 + 0.01*aggregate + x065
+
+IDENTITY> p065
+EQ> p065 = 0.15*y065 + cost065
+
+IDENTITY> cap065
+EQ> cap065 = y065
+IF> regime065 > 0
+IDENTITY> cap065
+EQ> cap065 = 0.8*y065
+IF> regime065 <= 0
+
+IDENTITY> y066
+EQ> y066 = 0.35*TSLAG(y066) + 0.10*p066 + 0.01*aggregate + x066
+
+IDENTITY> p066
+EQ> p066 = 0.15*y066 + cost066
+
+IDENTITY> cap066
+EQ> cap066 = y066
+IF> regime066 > 0
+IDENTITY> cap066
+EQ> cap066 = 0.8*y066
+IF> regime066 <= 0
+
+IDENTITY> y067
+EQ> y067 = 0.35*TSLAG(y067) + 0.10*p067 + 0.01*aggregate + x067
+
+IDENTITY> p067
+EQ> p067 = 0.15*y067 + cost067
+
+IDENTITY> cap067
+EQ> cap067 = y067
+IF> regime067 > 0
+IDENTITY> cap067
+EQ> cap067 = 0.8*y067
+IF> regime067 <= 0
+
+IDENTITY> y068
+EQ> y068 = 0.35*TSLAG(y068) + 0.10*p068 + 0.01*aggregate + x068
+
+IDENTITY> p068
+EQ> p068 = 0.15*y068 + cost068
+
+IDENTITY> cap068
+EQ> cap068 = y068
+IF> regime068 > 0
+IDENTITY> cap068
+EQ> cap068 = 0.8*y068
+IF> regime068 <= 0
+
+IDENTITY> y069
+EQ> y069 = 0.35*TSLAG(y069) + 0.10*p069 + 0.01*aggregate + x069
+
+IDENTITY> p069
+EQ> p069 = 0.15*y069 + cost069
+
+IDENTITY> cap069
+EQ> cap069 = y069
+IF> regime069 > 0
+IDENTITY> cap069
+EQ> cap069 = 0.8*y069
+IF> regime069 <= 0
+
+IDENTITY> y070
+EQ> y070 = 0.35*TSLAG(y070) + 0.10*p070 + 0.01*aggregate + x070
+
+IDENTITY> p070
+EQ> p070 = 0.15*y070 + cost070
+
+IDENTITY> cap070
+EQ> cap070 = y070
+IF> regime070 > 0
+IDENTITY> cap070
+EQ> cap070 = 0.8*y070
+IF> regime070 <= 0
+
+IDENTITY> y071
+EQ> y071 = 0.35*TSLAG(y071) + 0.10*p071 + 0.01*aggregate + x071
+
+IDENTITY> p071
+EQ> p071 = 0.15*y071 + cost071
+
+IDENTITY> cap071
+EQ> cap071 = y071
+IF> regime071 > 0
+IDENTITY> cap071
+EQ> cap071 = 0.8*y071
+IF> regime071 <= 0
+
+IDENTITY> y072
+EQ> y072 = 0.35*TSLAG(y072) + 0.10*p072 + 0.01*aggregate + x072
+
+IDENTITY> p072
+EQ> p072 = 0.15*y072 + cost072
+
+IDENTITY> cap072
+EQ> cap072 = y072
+IF> regime072 > 0
+IDENTITY> cap072
+EQ> cap072 = 0.8*y072
+IF> regime072 <= 0
+
+IDENTITY> y073
+EQ> y073 = 0.35*TSLAG(y073) + 0.10*p073 + 0.01*aggregate + x073
+
+IDENTITY> p073
+EQ> p073 = 0.15*y073 + cost073
+
+IDENTITY> cap073
+EQ> cap073 = y073
+IF> regime073 > 0
+IDENTITY> cap073
+EQ> cap073 = 0.8*y073
+IF> regime073 <= 0
+
+IDENTITY> y074
+EQ> y074 = 0.35*TSLAG(y074) + 0.10*p074 + 0.01*aggregate + x074
+
+IDENTITY> p074
+EQ> p074 = 0.15*y074 + cost074
+
+IDENTITY> cap074
+EQ> cap074 = y074
+IF> regime074 > 0
+IDENTITY> cap074
+EQ> cap074 = 0.8*y074
+IF> regime074 <= 0
+
+IDENTITY> y075
+EQ> y075 = 0.35*TSLAG(y075) + 0.10*p075 + 0.01*aggregate + x075
+
+IDENTITY> p075
+EQ> p075 = 0.15*y075 + cost075
+
+IDENTITY> cap075
+EQ> cap075 = y075
+IF> regime075 > 0
+IDENTITY> cap075
+EQ> cap075 = 0.8*y075
+IF> regime075 <= 0
+
+IDENTITY> y076
+EQ> y076 = 0.35*TSLAG(y076) + 0.10*p076 + 0.01*aggregate + x076
+
+IDENTITY> p076
+EQ> p076 = 0.15*y076 + cost076
+
+IDENTITY> cap076
+EQ> cap076 = y076
+IF> regime076 > 0
+IDENTITY> cap076
+EQ> cap076 = 0.8*y076
+IF> regime076 <= 0
+
+IDENTITY> y077
+EQ> y077 = 0.35*TSLAG(y077) + 0.10*p077 + 0.01*aggregate + x077
+
+IDENTITY> p077
+EQ> p077 = 0.15*y077 + cost077
+
+IDENTITY> cap077
+EQ> cap077 = y077
+IF> regime077 > 0
+IDENTITY> cap077
+EQ> cap077 = 0.8*y077
+IF> regime077 <= 0
+
+IDENTITY> y078
+EQ> y078 = 0.35*TSLAG(y078) + 0.10*p078 + 0.01*aggregate + x078
+
+IDENTITY> p078
+EQ> p078 = 0.15*y078 + cost078
+
+IDENTITY> cap078
+EQ> cap078 = y078
+IF> regime078 > 0
+IDENTITY> cap078
+EQ> cap078 = 0.8*y078
+IF> regime078 <= 0
+
+IDENTITY> y079
+EQ> y079 = 0.35*TSLAG(y079) + 0.10*p079 + 0.01*aggregate + x079
+
+IDENTITY> p079
+EQ> p079 = 0.15*y079 + cost079
+
+IDENTITY> cap079
+EQ> cap079 = y079
+IF> regime079 > 0
+IDENTITY> cap079
+EQ> cap079 = 0.8*y079
+IF> regime079 <= 0
+
+IDENTITY> y080
+EQ> y080 = 0.35*TSLAG(y080) + 0.10*p080 + 0.01*aggregate + x080
+
+IDENTITY> p080
+EQ> p080 = 0.15*y080 + cost080
+
+IDENTITY> cap080
+EQ> cap080 = y080
+IF> regime080 > 0
+IDENTITY> cap080
+EQ> cap080 = 0.8*y080
+IF> regime080 <= 0
+
+IDENTITY> y081
+EQ> y081 = 0.35*TSLAG(y081) + 0.10*p081 + 0.01*aggregate + x081
+
+IDENTITY> p081
+EQ> p081 = 0.15*y081 + cost081
+
+IDENTITY> cap081
+EQ> cap081 = y081
+IF> regime081 > 0
+IDENTITY> cap081
+EQ> cap081 = 0.8*y081
+IF> regime081 <= 0
+
+IDENTITY> y082
+EQ> y082 = 0.35*TSLAG(y082) + 0.10*p082 + 0.01*aggregate + x082
+
+IDENTITY> p082
+EQ> p082 = 0.15*y082 + cost082
+
+IDENTITY> cap082
+EQ> cap082 = y082
+IF> regime082 > 0
+IDENTITY> cap082
+EQ> cap082 = 0.8*y082
+IF> regime082 <= 0
+
+IDENTITY> y083
+EQ> y083 = 0.35*TSLAG(y083) + 0.10*p083 + 0.01*aggregate + x083
+
+IDENTITY> p083
+EQ> p083 = 0.15*y083 + cost083
+
+IDENTITY> cap083
+EQ> cap083 = y083
+IF> regime083 > 0
+IDENTITY> cap083
+EQ> cap083 = 0.8*y083
+IF> regime083 <= 0
+
+IDENTITY> y084
+EQ> y084 = 0.35*TSLAG(y084) + 0.10*p084 + 0.01*aggregate + x084
+
+IDENTITY> p084
+EQ> p084 = 0.15*y084 + cost084
+
+IDENTITY> cap084
+EQ> cap084 = y084
+IF> regime084 > 0
+IDENTITY> cap084
+EQ> cap084 = 0.8*y084
+IF> regime084 <= 0
+
+IDENTITY> y085
+EQ> y085 = 0.35*TSLAG(y085) + 0.10*p085 + 0.01*aggregate + x085
+
+IDENTITY> p085
+EQ> p085 = 0.15*y085 + cost085
+
+IDENTITY> cap085
+EQ> cap085 = y085
+IF> regime085 > 0
+IDENTITY> cap085
+EQ> cap085 = 0.8*y085
+IF> regime085 <= 0
+
+IDENTITY> y086
+EQ> y086 = 0.35*TSLAG(y086) + 0.10*p086 + 0.01*aggregate + x086
+
+IDENTITY> p086
+EQ> p086 = 0.15*y086 + cost086
+
+IDENTITY> cap086
+EQ> cap086 = y086
+IF> regime086 > 0
+IDENTITY> cap086
+EQ> cap086 = 0.8*y086
+IF> regime086 <= 0
+
+IDENTITY> y087
+EQ> y087 = 0.35*TSLAG(y087) + 0.10*p087 + 0.01*aggregate + x087
+
+IDENTITY> p087
+EQ> p087 = 0.15*y087 + cost087
+
+IDENTITY> cap087
+EQ> cap087 = y087
+IF> regime087 > 0
+IDENTITY> cap087
+EQ> cap087 = 0.8*y087
+IF> regime087 <= 0
+
+IDENTITY> y088
+EQ> y088 = 0.35*TSLAG(y088) + 0.10*p088 + 0.01*aggregate + x088
+
+IDENTITY> p088
+EQ> p088 = 0.15*y088 + cost088
+
+IDENTITY> cap088
+EQ> cap088 = y088
+IF> regime088 > 0
+IDENTITY> cap088
+EQ> cap088 = 0.8*y088
+IF> regime088 <= 0
+
+IDENTITY> y089
+EQ> y089 = 0.35*TSLAG(y089) + 0.10*p089 + 0.01*aggregate + x089
+
+IDENTITY> p089
+EQ> p089 = 0.15*y089 + cost089
+
+IDENTITY> cap089
+EQ> cap089 = y089
+IF> regime089 > 0
+IDENTITY> cap089
+EQ> cap089 = 0.8*y089
+IF> regime089 <= 0
+
+IDENTITY> y090
+EQ> y090 = 0.35*TSLAG(y090) + 0.10*p090 + 0.01*aggregate + x090
+
+IDENTITY> p090
+EQ> p090 = 0.15*y090 + cost090
+
+IDENTITY> cap090
+EQ> cap090 = y090
+IF> regime090 > 0
+IDENTITY> cap090
+EQ> cap090 = 0.8*y090
+IF> regime090 <= 0
+
+IDENTITY> y091
+EQ> y091 = 0.35*TSLAG(y091) + 0.10*p091 + 0.01*aggregate + x091
+
+IDENTITY> p091
+EQ> p091 = 0.15*y091 + cost091
+
+IDENTITY> cap091
+EQ> cap091 = y091
+IF> regime091 > 0
+IDENTITY> cap091
+EQ> cap091 = 0.8*y091
+IF> regime091 <= 0
+
+IDENTITY> y092
+EQ> y092 = 0.35*TSLAG(y092) + 0.10*p092 + 0.01*aggregate + x092
+
+IDENTITY> p092
+EQ> p092 = 0.15*y092 + cost092
+
+IDENTITY> cap092
+EQ> cap092 = y092
+IF> regime092 > 0
+IDENTITY> cap092
+EQ> cap092 = 0.8*y092
+IF> regime092 <= 0
+
+IDENTITY> y093
+EQ> y093 = 0.35*TSLAG(y093) + 0.10*p093 + 0.01*aggregate + x093
+
+IDENTITY> p093
+EQ> p093 = 0.15*y093 + cost093
+
+IDENTITY> cap093
+EQ> cap093 = y093
+IF> regime093 > 0
+IDENTITY> cap093
+EQ> cap093 = 0.8*y093
+IF> regime093 <= 0
+
+IDENTITY> y094
+EQ> y094 = 0.35*TSLAG(y094) + 0.10*p094 + 0.01*aggregate + x094
+
+IDENTITY> p094
+EQ> p094 = 0.15*y094 + cost094
+
+IDENTITY> cap094
+EQ> cap094 = y094
+IF> regime094 > 0
+IDENTITY> cap094
+EQ> cap094 = 0.8*y094
+IF> regime094 <= 0
+
+IDENTITY> y095
+EQ> y095 = 0.35*TSLAG(y095) + 0.10*p095 + 0.01*aggregate + x095
+
+IDENTITY> p095
+EQ> p095 = 0.15*y095 + cost095
+
+IDENTITY> cap095
+EQ> cap095 = y095
+IF> regime095 > 0
+IDENTITY> cap095
+EQ> cap095 = 0.8*y095
+IF> regime095 <= 0
+
+IDENTITY> y096
+EQ> y096 = 0.35*TSLAG(y096) + 0.10*p096 + 0.01*aggregate + x096
+
+IDENTITY> p096
+EQ> p096 = 0.15*y096 + cost096
+
+IDENTITY> cap096
+EQ> cap096 = y096
+IF> regime096 > 0
+IDENTITY> cap096
+EQ> cap096 = 0.8*y096
+IF> regime096 <= 0
+
+IDENTITY> y097
+EQ> y097 = 0.35*TSLAG(y097) + 0.10*p097 + 0.01*aggregate + x097
+
+IDENTITY> p097
+EQ> p097 = 0.15*y097 + cost097
+
+IDENTITY> cap097
+EQ> cap097 = y097
+IF> regime097 > 0
+IDENTITY> cap097
+EQ> cap097 = 0.8*y097
+IF> regime097 <= 0
+
+IDENTITY> y098
+EQ> y098 = 0.35*TSLAG(y098) + 0.10*p098 + 0.01*aggregate + x098
+
+IDENTITY> p098
+EQ> p098 = 0.15*y098 + cost098
+
+IDENTITY> cap098
+EQ> cap098 = y098
+IF> regime098 > 0
+IDENTITY> cap098
+EQ> cap098 = 0.8*y098
+IF> regime098 <= 0
+
+IDENTITY> y099
+EQ> y099 = 0.35*TSLAG(y099) + 0.10*p099 + 0.01*aggregate + x099
+
+IDENTITY> p099
+EQ> p099 = 0.15*y099 + cost099
+
+IDENTITY> cap099
+EQ> cap099 = y099
+IF> regime099 > 0
+IDENTITY> cap099
+EQ> cap099 = 0.8*y099
+IF> regime099 <= 0
+
+IDENTITY> y100
+EQ> y100 = 0.35*TSLAG(y100) + 0.10*p100 + 0.01*aggregate + x100
+
+IDENTITY> p100
+EQ> p100 = 0.15*y100 + cost100
+
+IDENTITY> cap100
+EQ> cap100 = y100
+IF> regime100 > 0
+IDENTITY> cap100
+EQ> cap100 = 0.8*y100
+IF> regime100 <= 0
+
+IDENTITY> y101
+EQ> y101 = 0.35*TSLAG(y101) + 0.10*p101 + 0.01*aggregate + x101
+
+IDENTITY> p101
+EQ> p101 = 0.15*y101 + cost101
+
+IDENTITY> cap101
+EQ> cap101 = y101
+IF> regime101 > 0
+IDENTITY> cap101
+EQ> cap101 = 0.8*y101
+IF> regime101 <= 0
+
+IDENTITY> y102
+EQ> y102 = 0.35*TSLAG(y102) + 0.10*p102 + 0.01*aggregate + x102
+
+IDENTITY> p102
+EQ> p102 = 0.15*y102 + cost102
+
+IDENTITY> cap102
+EQ> cap102 = y102
+IF> regime102 > 0
+IDENTITY> cap102
+EQ> cap102 = 0.8*y102
+IF> regime102 <= 0
+
+IDENTITY> y103
+EQ> y103 = 0.35*TSLAG(y103) + 0.10*p103 + 0.01*aggregate + x103
+
+IDENTITY> p103
+EQ> p103 = 0.15*y103 + cost103
+
+IDENTITY> cap103
+EQ> cap103 = y103
+IF> regime103 > 0
+IDENTITY> cap103
+EQ> cap103 = 0.8*y103
+IF> regime103 <= 0
+
+IDENTITY> y104
+EQ> y104 = 0.35*TSLAG(y104) + 0.10*p104 + 0.01*aggregate + x104
+
+IDENTITY> p104
+EQ> p104 = 0.15*y104 + cost104
+
+IDENTITY> cap104
+EQ> cap104 = y104
+IF> regime104 > 0
+IDENTITY> cap104
+EQ> cap104 = 0.8*y104
+IF> regime104 <= 0
+
+IDENTITY> y105
+EQ> y105 = 0.35*TSLAG(y105) + 0.10*p105 + 0.01*aggregate + x105
+
+IDENTITY> p105
+EQ> p105 = 0.15*y105 + cost105
+
+IDENTITY> cap105
+EQ> cap105 = y105
+IF> regime105 > 0
+IDENTITY> cap105
+EQ> cap105 = 0.8*y105
+IF> regime105 <= 0
+
+IDENTITY> y106
+EQ> y106 = 0.35*TSLAG(y106) + 0.10*p106 + 0.01*aggregate + x106
+
+IDENTITY> p106
+EQ> p106 = 0.15*y106 + cost106
+
+IDENTITY> cap106
+EQ> cap106 = y106
+IF> regime106 > 0
+IDENTITY> cap106
+EQ> cap106 = 0.8*y106
+IF> regime106 <= 0
+
+IDENTITY> y107
+EQ> y107 = 0.35*TSLAG(y107) + 0.10*p107 + 0.01*aggregate + x107
+
+IDENTITY> p107
+EQ> p107 = 0.15*y107 + cost107
+
+IDENTITY> cap107
+EQ> cap107 = y107
+IF> regime107 > 0
+IDENTITY> cap107
+EQ> cap107 = 0.8*y107
+IF> regime107 <= 0
+
+IDENTITY> y108
+EQ> y108 = 0.35*TSLAG(y108) + 0.10*p108 + 0.01*aggregate + x108
+
+IDENTITY> p108
+EQ> p108 = 0.15*y108 + cost108
+
+IDENTITY> cap108
+EQ> cap108 = y108
+IF> regime108 > 0
+IDENTITY> cap108
+EQ> cap108 = 0.8*y108
+IF> regime108 <= 0
+
+IDENTITY> y109
+EQ> y109 = 0.35*TSLAG(y109) + 0.10*p109 + 0.01*aggregate + x109
+
+IDENTITY> p109
+EQ> p109 = 0.15*y109 + cost109
+
+IDENTITY> cap109
+EQ> cap109 = y109
+IF> regime109 > 0
+IDENTITY> cap109
+EQ> cap109 = 0.8*y109
+IF> regime109 <= 0
+
+IDENTITY> y110
+EQ> y110 = 0.35*TSLAG(y110) + 0.10*p110 + 0.01*aggregate + x110
+
+IDENTITY> p110
+EQ> p110 = 0.15*y110 + cost110
+
+IDENTITY> cap110
+EQ> cap110 = y110
+IF> regime110 > 0
+IDENTITY> cap110
+EQ> cap110 = 0.8*y110
+IF> regime110 <= 0
+
+IDENTITY> y111
+EQ> y111 = 0.35*TSLAG(y111) + 0.10*p111 + 0.01*aggregate + x111
+
+IDENTITY> p111
+EQ> p111 = 0.15*y111 + cost111
+
+IDENTITY> cap111
+EQ> cap111 = y111
+IF> regime111 > 0
+IDENTITY> cap111
+EQ> cap111 = 0.8*y111
+IF> regime111 <= 0
+
+IDENTITY> y112
+EQ> y112 = 0.35*TSLAG(y112) + 0.10*p112 + 0.01*aggregate + x112
+
+IDENTITY> p112
+EQ> p112 = 0.15*y112 + cost112
+
+IDENTITY> cap112
+EQ> cap112 = y112
+IF> regime112 > 0
+IDENTITY> cap112
+EQ> cap112 = 0.8*y112
+IF> regime112 <= 0
+
+IDENTITY> y113
+EQ> y113 = 0.35*TSLAG(y113) + 0.10*p113 + 0.01*aggregate + x113
+
+IDENTITY> p113
+EQ> p113 = 0.15*y113 + cost113
+
+IDENTITY> cap113
+EQ> cap113 = y113
+IF> regime113 > 0
+IDENTITY> cap113
+EQ> cap113 = 0.8*y113
+IF> regime113 <= 0
+
+IDENTITY> y114
+EQ> y114 = 0.35*TSLAG(y114) + 0.10*p114 + 0.01*aggregate + x114
+
+IDENTITY> p114
+EQ> p114 = 0.15*y114 + cost114
+
+IDENTITY> cap114
+EQ> cap114 = y114
+IF> regime114 > 0
+IDENTITY> cap114
+EQ> cap114 = 0.8*y114
+IF> regime114 <= 0
+
+IDENTITY> y115
+EQ> y115 = 0.35*TSLAG(y115) + 0.10*p115 + 0.01*aggregate + x115
+
+IDENTITY> p115
+EQ> p115 = 0.15*y115 + cost115
+
+IDENTITY> cap115
+EQ> cap115 = y115
+IF> regime115 > 0
+IDENTITY> cap115
+EQ> cap115 = 0.8*y115
+IF> regime115 <= 0
+
+IDENTITY> y116
+EQ> y116 = 0.35*TSLAG(y116) + 0.10*p116 + 0.01*aggregate + x116
+
+IDENTITY> p116
+EQ> p116 = 0.15*y116 + cost116
+
+IDENTITY> cap116
+EQ> cap116 = y116
+IF> regime116 > 0
+IDENTITY> cap116
+EQ> cap116 = 0.8*y116
+IF> regime116 <= 0
+
+IDENTITY> y117
+EQ> y117 = 0.35*TSLAG(y117) + 0.10*p117 + 0.01*aggregate + x117
+
+IDENTITY> p117
+EQ> p117 = 0.15*y117 + cost117
+
+IDENTITY> cap117
+EQ> cap117 = y117
+IF> regime117 > 0
+IDENTITY> cap117
+EQ> cap117 = 0.8*y117
+IF> regime117 <= 0
+
+IDENTITY> y118
+EQ> y118 = 0.35*TSLAG(y118) + 0.10*p118 + 0.01*aggregate + x118
+
+IDENTITY> p118
+EQ> p118 = 0.15*y118 + cost118
+
+IDENTITY> cap118
+EQ> cap118 = y118
+IF> regime118 > 0
+IDENTITY> cap118
+EQ> cap118 = 0.8*y118
+IF> regime118 <= 0
+
+IDENTITY> y119
+EQ> y119 = 0.35*TSLAG(y119) + 0.10*p119 + 0.01*aggregate + x119
+
+IDENTITY> p119
+EQ> p119 = 0.15*y119 + cost119
+
+IDENTITY> cap119
+EQ> cap119 = y119
+IF> regime119 > 0
+IDENTITY> cap119
+EQ> cap119 = 0.8*y119
+IF> regime119 <= 0
+
+IDENTITY> y120
+EQ> y120 = 0.35*TSLAG(y120) + 0.10*p120 + 0.01*aggregate + x120
+
+IDENTITY> p120
+EQ> p120 = 0.15*y120 + cost120
+
+IDENTITY> cap120
+EQ> cap120 = y120
+IF> regime120 > 0
+IDENTITY> cap120
+EQ> cap120 = 0.8*y120
+IF> regime120 <= 0
+
+IDENTITY> aggregate
+EQ> aggregate = (cap001+cap002+cap003+cap004+cap005+cap006+cap007+cap008+cap009+cap010+cap011+cap012+cap013+cap014+cap015+cap016+cap017+cap018+cap019+cap020+cap021+cap022+cap023+cap024+cap025+cap026+cap027+cap028+cap029+cap030+cap031+cap032+cap033+cap034+cap035+cap036+cap037+cap038+cap039+cap040+cap041+cap042+cap043+cap044+cap045+cap046+cap047+cap048+cap049+cap050+cap051+cap052+cap053+cap054+cap055+cap056+cap057+cap058+cap059+cap060+cap061+cap062+cap063+cap064+cap065+cap066+cap067+cap068+cap069+cap070+cap071+cap072+cap073+cap074+cap075+cap076+cap077+cap078+cap079+cap080+cap081+cap082+cap083+cap084+cap085+cap086+cap087+cap088+cap089+cap090+cap091+cap092+cap093+cap094+cap095+cap096+cap097+cap098+cap099+cap100+cap101+cap102+cap103+cap104+cap105+cap106+cap107+cap108+cap109+cap110+cap111+cap112+cap113+cap114+cap115+cap116+cap117+cap118+cap119+cap120)/120
+
+END

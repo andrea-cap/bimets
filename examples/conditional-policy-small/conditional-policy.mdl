@@ -1,0 +1,112 @@
+MODEL
+
+$ Synthetic conditional policy system
+
+IDENTITY> y001
+EQ> y001 = 0.35*TSLAG(y001) + 0.10*p001 + 0.01*aggregate + x001
+
+IDENTITY> p001
+EQ> p001 = 0.15*y001 + cost001
+
+IDENTITY> cap001
+EQ> cap001 = y001
+IF> regime001 > 0
+IDENTITY> cap001
+EQ> cap001 = 0.8*y001
+IF> regime001 <= 0
+
+IDENTITY> y002
+EQ> y002 = 0.35*TSLAG(y002) + 0.10*p002 + 0.01*aggregate + x002
+
+IDENTITY> p002
+EQ> p002 = 0.15*y002 + cost002
+
+IDENTITY> cap002
+EQ> cap002 = y002
+IF> regime002 > 0
+IDENTITY> cap002
+EQ> cap002 = 0.8*y002
+IF> regime002 <= 0
+
+IDENTITY> y003
+EQ> y003 = 0.35*TSLAG(y003) + 0.10*p003 + 0.01*aggregate + x003
+
+IDENTITY> p003
+EQ> p003 = 0.15*y003 + cost003
+
+IDENTITY> cap003
+EQ> cap003 = y003
+IF> regime003 > 0
+IDENTITY> cap003
+EQ> cap003 = 0.8*y003
+IF> regime003 <= 0
+
+IDENTITY> y004
+EQ> y004 = 0.35*TSLAG(y004) + 0.10*p004 + 0.01*aggregate + x004
+
+IDENTITY> p004
+EQ> p004 = 0.15*y004 + cost004
+
+IDENTITY> cap004
+EQ> cap004 = y004
+IF> regime004 > 0
+IDENTITY> cap004
+EQ> cap004 = 0.8*y004
+IF> regime004 <= 0
+
+IDENTITY> y005
+EQ> y005 = 0.35*TSLAG(y005) + 0.10*p005 + 0.01*aggregate + x005
+
+IDENTITY> p005
+EQ> p005 = 0.15*y005 + cost005
+
+IDENTITY> cap005
+EQ> cap005 = y005
+IF> regime005 > 0
+IDENTITY> cap005
+EQ> cap005 = 0.8*y005
+IF> regime005 <= 0
+
+IDENTITY> y006
+EQ> y006 = 0.35*TSLAG(y006) + 0.10*p006 + 0.01*aggregate + x006
+
+IDENTITY> p006
+EQ> p006 = 0.15*y006 + cost006
+
+IDENTITY> cap006
+EQ> cap006 = y006
+IF> regime006 > 0
+IDENTITY> cap006
+EQ> cap006 = 0.8*y006
+IF> regime006 <= 0
+
+IDENTITY> y007
+EQ> y007 = 0.35*TSLAG(y007) + 0.10*p007 + 0.01*aggregate + x007
+
+IDENTITY> p007
+EQ> p007 = 0.15*y007 + cost007
+
+IDENTITY> cap007
+EQ> cap007 = y007
+IF> regime007 > 0
+IDENTITY> cap007
+EQ> cap007 = 0.8*y007
+IF> regime007 <= 0
+
+IDENTITY> y008
+EQ> y008 = 0.35*TSLAG(y008) + 0.10*p008 + 0.01*aggregate + x008
+
+IDENTITY> p008
+EQ> p008 = 0.15*y008 + cost008
+
+IDENTITY> cap008
+EQ> cap008 = y008
+IF> regime008 > 0
+IDENTITY> cap008
+EQ> cap008 = 0.8*y008
+IF> regime008 <= 0
+
+IDENTITY> aggregate
+EQ> aggregate = (cap001+cap002+cap003+cap004+cap005+cap006+cap007+cap008)/8
+
+END

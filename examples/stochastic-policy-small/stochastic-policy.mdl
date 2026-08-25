@@ -1,0 +1,32 @@
+MODEL
+
+$ Synthetic stochastic policy system
+
+IDENTITY> y001
+EQ> y001 = 0.40*TSLAG(y001) + 0.08*aggregate + x001
+
+IDENTITY> y002
+EQ> y002 = 0.40*TSLAG(y002) + 0.08*aggregate + x002
+
+IDENTITY> y003
+EQ> y003 = 0.40*TSLAG(y003) + 0.08*aggregate + x003
+
+IDENTITY> y004
+EQ> y004 = 0.40*TSLAG(y004) + 0.08*aggregate + x004
+
+IDENTITY> y005
+EQ> y005 = 0.40*TSLAG(y005) + 0.08*aggregate + x005
+
+IDENTITY> y006
+EQ> y006 = 0.40*TSLAG(y006) + 0.08*aggregate + x006
+
+IDENTITY> y007
+EQ> y007 = 0.40*TSLAG(y007) + 0.08*aggregate + x007
+
+IDENTITY> y008
+EQ> y008 = 0.40*TSLAG(y008) + 0.08*aggregate + x008
+
+IDENTITY> aggregate
+EQ> aggregate = (y001+y002+y003+y004+y005+y006+y007+y008)/8
+
+END

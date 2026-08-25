@@ -1,0 +1,188 @@
+MODEL
+
+$ Synthetic stochastic policy system
+
+IDENTITY> y001
+EQ> y001 = 0.40*TSLAG(y001) + 0.08*aggregate + x001
+
+IDENTITY> y002
+EQ> y002 = 0.40*TSLAG(y002) + 0.08*aggregate + x002
+
+IDENTITY> y003
+EQ> y003 = 0.40*TSLAG(y003) + 0.08*aggregate + x003
+
+IDENTITY> y004
+EQ> y004 = 0.40*TSLAG(y004) + 0.08*aggregate + x004
+
+IDENTITY> y005
+EQ> y005 = 0.40*TSLAG(y005) + 0.08*aggregate + x005
+
+IDENTITY> y006
+EQ> y006 = 0.40*TSLAG(y006) + 0.08*aggregate + x006
+
+IDENTITY> y007
+EQ> y007 = 0.40*TSLAG(y007) + 0.08*aggregate + x007
+
+IDENTITY> y008
+EQ> y008 = 0.40*TSLAG(y008) + 0.08*aggregate + x008
+
+IDENTITY> y009
+EQ> y009 = 0.40*TSLAG(y009) + 0.08*aggregate + x009
+
+IDENTITY> y010
+EQ> y010 = 0.40*TSLAG(y010) + 0.08*aggregate + x010
+
+IDENTITY> y011
+EQ> y011 = 0.40*TSLAG(y011) + 0.08*aggregate + x011
+
+IDENTITY> y012
+EQ> y012 = 0.40*TSLAG(y012) + 0.08*aggregate + x012
+
+IDENTITY> y013
+EQ> y013 = 0.40*TSLAG(y013) + 0.08*aggregate + x013
+
+IDENTITY> y014
+EQ> y014 = 0.40*TSLAG(y014) + 0.08*aggregate + x014
+
+IDENTITY> y015
+EQ> y015 = 0.40*TSLAG(y015) + 0.08*aggregate + x015
+
+IDENTITY> y016
+EQ> y016 = 0.40*TSLAG(y016) + 0.08*aggregate + x016
+
+IDENTITY> y017
+EQ> y017 = 0.40*TSLAG(y017) + 0.08*aggregate + x017
+
+IDENTITY> y018
+EQ> y018 = 0.40*TSLAG(y018) + 0.08*aggregate + x018
+
+IDENTITY> y019
+EQ> y019 = 0.40*TSLAG(y019) + 0.08*aggregate + x019
+
+IDENTITY> y020
+EQ> y020 = 0.40*TSLAG(y020) + 0.08*aggregate + x020
+
+IDENTITY> y021
+EQ> y021 = 0.40*TSLAG(y021) + 0.08*aggregate + x021
+
+IDENTITY> y022
+EQ> y022 = 0.40*TSLAG(y022) + 0.08*aggregate + x022
+
+IDENTITY> y023
+EQ> y023 = 0.40*TSLAG(y023) + 0.08*aggregate + x023
+
+IDENTITY> y024
+EQ> y024 = 0.40*TSLAG(y024) + 0.08*aggregate + x024
+
+IDENTITY> y025
+EQ> y025 = 0.40*TSLAG(y025) + 0.08*aggregate + x025
+
+IDENTITY> y026
+EQ> y026 = 0.40*TSLAG(y026) + 0.08*aggregate + x026
+
+IDENTITY> y027
+EQ> y027 = 0.40*TSLAG(y027) + 0.08*aggregate + x027
+
+IDENTITY> y028
+EQ> y028 = 0.40*TSLAG(y028) + 0.08*aggregate + x028
+
+IDENTITY> y029
+EQ> y029 = 0.40*TSLAG(y029) + 0.08*aggregate + x029
+
+IDENTITY> y030
+EQ> y030 = 0.40*TSLAG(y030) + 0.08*aggregate + x030
+
+IDENTITY> y031
+EQ> y031 = 0.40*TSLAG(y031) + 0.08*aggregate + x031
+
+IDENTITY> y032
+EQ> y032 = 0.40*TSLAG(y032) + 0.08*aggregate + x032
+
+IDENTITY> y033
+EQ> y033 = 0.40*TSLAG(y033) + 0.08*aggregate + x033
+
+IDENTITY> y034
+EQ> y034 = 0.40*TSLAG(y034) + 0.08*aggregate + x034
+
+IDENTITY> y035
+EQ> y035 = 0.40*TSLAG(y035) + 0.08*aggregate + x035
+
+IDENTITY> y036
+EQ> y036 = 0.40*TSLAG(y036) + 0.08*aggregate + x036
+
+IDENTITY> y037
+EQ> y037 = 0.40*TSLAG(y037) + 0.08*aggregate + x037
+
+IDENTITY> y038
+EQ> y038 = 0.40*TSLAG(y038) + 0.08*aggregate + x038
+
+IDENTITY> y039
+EQ> y039 = 0.40*TSLAG(y039) + 0.08*aggregate + x039
+
+IDENTITY> y040
+EQ> y040 = 0.40*TSLAG(y040) + 0.08*aggregate + x040
+
+IDENTITY> y041
+EQ> y041 = 0.40*TSLAG(y041) + 0.08*aggregate + x041
+
+IDENTITY> y042
+EQ> y042 = 0.40*TSLAG(y042) + 0.08*aggregate + x042
+
+IDENTITY> y043
+EQ> y043 = 0.40*TSLAG(y043) + 0.08*aggregate + x043
+
+IDENTITY> y044
+EQ> y044 = 0.40*TSLAG(y044) + 0.08*aggregate + x044
+
+IDENTITY> y045
+EQ> y045 = 0.40*TSLAG(y045) + 0.08*aggregate + x045
+
+IDENTITY> y046
+EQ> y046 = 0.40*TSLAG(y046) + 0.08*aggregate + x046
+
+IDENTITY> y047
+EQ> y047 = 0.40*TSLAG(y047) + 0.08*aggregate + x047
+
+IDENTITY> y048
+EQ> y048 = 0.40*TSLAG(y048) + 0.08*aggregate + x048
+
+IDENTITY> y049
+EQ> y049 = 0.40*TSLAG(y049) + 0.08*aggregate + x049
+
+IDENTITY> y050
+EQ> y050 = 0.40*TSLAG(y050) + 0.08*aggregate + x050
+
+IDENTITY> y051
+EQ> y051 = 0.40*TSLAG(y051) + 0.08*aggregate + x051
+
+IDENTITY> y052
+EQ> y052 = 0.40*TSLAG(y052) + 0.08*aggregate + x052
+
+IDENTITY> y053
+EQ> y053 = 0.40*TSLAG(y053) + 0.08*aggregate + x053
+
+IDENTITY> y054
+EQ> y054 = 0.40*TSLAG(y054) + 0.08*aggregate + x054
+
+IDENTITY> y055
+EQ> y055 = 0.40*TSLAG(y055) + 0.08*aggregate + x055
+
+IDENTITY> y056
+EQ> y056 = 0.40*TSLAG(y056) + 0.08*aggregate + x056
+
+IDENTITY> y057
+EQ> y057 = 0.40*TSLAG(y057) + 0.08*aggregate + x057
+
+IDENTITY> y058
+EQ> y058 = 0.40*TSLAG(y058) + 0.08*aggregate + x058
+
+IDENTITY> y059
+EQ> y059 = 0.40*TSLAG(y059) + 0.08*aggregate + x059
+
+IDENTITY> y060
+EQ> y060 = 0.40*TSLAG(y060) + 0.08*aggregate + x060
+
+IDENTITY> aggregate
+EQ> aggregate = (y001+y002+y003+y004+y005+y006+y007+y008+y009+y010+y011+y012+y013+y014+y015+y016+y017+y018+y019+y020+y021+y022+y023+y024+y025+y026+y027+y028+y029+y030+y031+y032+y033+y034+y035+y036+y037+y038+y039+y040+y041+y042+y043+y044+y045+y046+y047+y048+y049+y050+y051+y052+y053+y054+y055+y056+y057+y058+y059+y060)/60
+
+END

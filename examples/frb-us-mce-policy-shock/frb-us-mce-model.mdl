@@ -1,0 +1,2837 @@
+MODEL
+
+$DOWNLOADED FROM federalreserve.gov AND CONVERTED TO BIMETS MDL IN Feb, 2024
+
+$FRB/US is a large-scale estimated general equilibrium model of the U.S. economy 
+$that was developed at the Federal Reserve Board, where it has been in use since 1996 
+$for forecasting, analysis of policy options, and research projects. 
+
+$This is the MCE (model-consistent expectations/rational expectations) versione of th FRB/US model.
+$Following variables have LEADS in related equations:
+$zdivgr, zgap05, zgap10, zgap30, zpi10, zpi10f, zpib5, zpic30, zpic58, zpicxfe, zpieci, zrff10, zrff30, zrff5
+
+$--------------------------------------------------------------------------
+
+$ ENDOGENOUS SECTION
+
+$-----------------------------------------------
+$Financial Sector
+$Monetary policy indicator for both thresholds
+$DMPTMAX equals one when either the unemployment threshold or
+$the inflation threshold is breached.
+IDENTITY> dmptmax
+IF> dmptlur>=dmptpi
+EQ> dmptmax=
+dmptlur
+IDENTITY> dmptmax
+IF> dmptlur<dmptpi
+EQ> dmptmax=
+dmptpi
+
+$-----------------------------------------------
+$Federal funds rate, first diff
+IDENTITY> delrff
+EQ> delrff=
+TSDELTA(rff)
+
+$-----------------------------------------------
+$Financial Sector
+$Monetary policy indicator for unemployment threshold
+$DMPTLUR equals zero when the unemployment rate is above its
+$threshold (LURTRSH) one when it is below. A logistic function
+$smoothes the transition, improving solution convergence properties.
+IDENTITY> dmptlur
+EQ> dmptlur=
+1/(1+EXP(25*(lur-lurtrsh)))
+
+$-----------------------------------------------
+$Financial Sector
+$Monetary policy indicator for inflation threshold
+$DMPTPI equals zero when expected inflation is below its threshold
+$and one when it is above. A logistic function smoothes the
+$transition, improving solution convergence properties.
+IDENTITY> dmptpi
+EQ> dmptpi=
+1/(1+EXP(-25*(zpic58-pitrsh)))
+
+$-----------------------------------------------
+$Financial Sector
+$Monetary policy indicator for policy rule thresholds 
+$DMPTR is initially zero. It remains at that value until
+$either the unemployment threshold or the inflation threshold
+$is breached, after which it equals one.
+IDENTITY> dmptr
+IF> dmptmax>=TSLAG(dmptr)
+EQ> dmptr=
+dmptmax
+IDENTITY> dmptr
+IF> dmptmax<TSLAG(dmptr)
+EQ> dmptr=
+TSLAG(dmptr)
+
+$-----------------------------------------------
+$Wages and Prices
+$Price inflation aggregation adjustment
+$The adjustment factor for non-consumption prices equals the
+$value in the prior quarter plus the price aggregation discrepancy
+$in the prior quarter. Thus, component prices are adjusted to
+$offset any aggregation discrepancy with only a one-quarter lag.
+IDENTITY> dpadj
+EQ> TSDELTA(dpadj)=
+TSLAG(dpgap)
+
+$-----------------------------------------------
+$Wages and Prices
+$Price inflation aggregation discrepancy
+$The price inflation aggregation discrepancy (DPGAP) equals the rate
+$of increase of the price for adjusted final sales excluding
+$consumption less the weighted sum of rates of price increase for the
+$non-consumption components of adjusted final sales.
+IDENTITY> dpgap
+EQ> dpgap=
+(pipxnc/400)-(
+(0.1036498839384806)*(TSDELTALOG(phr*pxp))+
+(0.3410415470273469)*(TSDELTALOG(pbfir*pxp))+
+(0.08204590812944115+0.03932014681002743)*(TSDELTALOG(pegfr*pxp))+
+(0.05247494124140634+0.05248394123132865)*(TSDELTALOG(pegsr*pxp))+
+(+0.328983631621969)*(TSDELTALOG(pxr*pxp)))
+
+$-----------------------------------------------
+$Business Expenditures
+$Business Fixed Investment, cw 2012
+$Business Fixed Investment is a weighted average of the investment spending
+$of optimizing firms and an ad hoc term in lagged output growth adjusted for the trend growth
+$rate of the relative price of investment.
+IDENTITY> ebfi
+EQ> TSDELTALOG(ebfi)=
+(1-0.3835146156808873)*(+
+(0.07358150979200171)*(LOG(TSLAG(qebfi/ebfi)))+
+(0.5222641043182303)*(TSDELTALOG(TSLAG(ebfi)))+
+(0.3022170849291267)*(TSDELTALOG(TSLAG(ebfi,2)))+
+(1)*zebfi)+
+(0.3835146156808873)*((TSDELTALOG(TSLAG(xb)))-TSLAG(hgpbfir)/400)
+
+$----------------------------------------------- 
+$Business Expenditures
+$Investment in equipment, current dollar
+IDENTITY> ebfin
+EQ> ebfin=
+(0.01)*ebfi*pbfir*pxp 
+
+$-----------------------------------------------
+$Household Expenditures
+$Consumption, cw 2012 dollar (FRB/US definition)
+$The FRB/US concept of total consumer spending is approximated by
+$a fixed-weighted aggregation of its components.
+IDENTITY> ec
+EQ> TSDELTALOG(ec)=
+(0.7310605131)*LOG(eco/TSLAG(eco))+
+(0.157421136)*LOG(ech/TSLAG(ech))+
+(0.1115183509)*LOG((yhpcd+jkcd)/(TSLAG(yhpcd+jkcd)))
+
+$-----------------------------------------------
+$Household Expenditures
+$Consumer expenditures on durable goods, cw 2012 dollar
+$Household investment in consumer durables is modeled using the
+$polynomial adjustment cost (PAC) framework
+IDENTITY> ecd
+EQ> TSDELTALOG(ecd)=
+(0.1561499403562654)*LOG(TSLAG(qecd/ecd))+
+(-0.05999277989382532)*(TSDELTALOG(TSLAG(ecd)))+
+(1)*zecd+
+(11.87185840275941)*zgapc2/400 
+
+$-----------------------------------------------
+$Household Expenditures
+$Consumer expenditures on housing services, cw 2012 dollar
+IDENTITY> ech
+EQ> ech=
+TSLAG(kh)*(
+(TSLAG(ech)/TSLAG(kh,2))+
+(0.0005280507960180215)+
+(-0.005044873655834186)*TSLAG(ech)/TSLAG(kh,2)+
+(0.7183359768373699)*TSDELTA(TSLAG(ech)/TSLAG(kh,2))
+)
+
+$-----------------------------------------------
+$Household Expenditures
+$Personal consumption expenditures, cw 2012 dollar (NIPA definition)
+$NIPA total consumer spending is approximated by a fixed-weighted aggregation of its components.
+IDENTITY> ecnia
+EQ> TSDELTALOG(ecnia)=
+(0.735)*LOG(eco/TSLAG(eco))+
+(0.1055)*LOG(ecd/TSLAG(ecd))+
+(0.1595)*LOG(ech/TSLAG(ech))
+
+$-----------------------------------------------
+$Household Expenditures Personal consumption expenditures, current dollar (NIPA definition) 
+IDENTITY> ecnian
+EQ> ecnian=
+(0.01)*pcnia*ecnia
+
+$-----------------------------------------------
+$Household Expenditures
+$Consumer expenditures on non-durable goods and non-housing services, cw 2012 dollar
+$Consumer spending on nondurables goods and non-housing services is
+$a weighted average of the spending of optimizing households and
+$rule-of-thumb (ROT) households. 
+IDENTITY> eco
+EQ> TSDELTALOG(eco)=
+(1-0.3075237404993435)*(
+(0.1584215605793791)*LOG(TSLAG(qeco/eco))+
+(0.4118129978512995)*(TSDELTALOG(TSLAG(eco)))+
+(1)*zeco)+
+(0.3075237404993435)*LOG((yhl+yht)/TSLAG(yhl+yht)) 
+
+$-----------------------------------------------
+$Government
+$Federal Government expenditures, CW 2012 dollar
+IDENTITY> egfe 
+EQ> TSDELTALOG(egfe)=
+(-0.0008045327442607825)+
+(-0.1204156945139518)*LOG(TSLAG(egfe/egfet))+
+(-0.153308131863314)*TSDELTALOG(TSLAG(egfe))+
+(-0.1035937599294917)*TSDELTALOG(TSLAG(egfe,2))+
+(1.50381543495264)*LOG(egfet/TSLAG(egfet))+
+(-0.0009835524480447814)*xgap2+
+(0.0007256812123007961)*TSLAG(xgap2)
+
+$-----------------------------------------------
+$Government
+$Federal Government expenditures, current dollar
+IDENTITY> egfen
+EQ> egfen=
+pegfr*pxp*egfe*0.01
+
+$-----------------------------------------------
+$Government
+$Federal Government expenditures, CW 2012 dollar, Trend
+IDENTITY> egfet
+EQ> TSDELTALOG(egfet)=
+(-0.3101)+
+(-0.1)*LOG(0.01*TSLAG(pegfr*pxp*egfet/xgdptn))+
+(1)*MOVAVG(hggdpt,4)/400
+
+$-----------------------------------------------
+$Government
+$Federal government employee compensation, cw 2012 dollar
+IDENTITY> egfl
+EQ> TSDELTALOG(egfl)=
+(0.0002417378554669395)+
+(-0.0795584254267964)*LOG(TSLAG(egfl/egflt))+
+(0.2415347480637823)*TSDELTALOG(TSLAG(egfl))+
+(-0.06133379374138964)*TSDELTALOG(TSLAG(egfl,2))+
+(1.206872311101357)*LOG(egflt/TSLAG(egflt))+
+(-0.002507254010777311)*xgap2+
+(0.002350674896424264)*TSLAG(xgap2)
+
+$-----------------------------------------------
+$Government
+$Federal government employee compensation, current dollar
+IDENTITY> egfln
+EQ> egfln=
+(0.01)*pgfl*egfl
+
+$-----------------------------------------------
+$Government
+$Federal government employee compensation, cw 2012 dollar, trend
+IDENTITY> egflt
+EQ> TSDELTALOG(egflt)=
+(-0.375978)+
+(-0.1)*LOG(0.01*TSLAG(pgfl*egflt/xgdptn))+
+(1)*MOVAVG(hggdpt,4)/400
+
+$-----------------------------------------------
+$Government
+$S&L Government expenditures, CW 2012 dollar
+IDENTITY> egse
+EQ> TSDELTALOG(egse)=
+(-0.0003205558585065158)+
+(-0.1310861864392932)*LOG(TSLAG(egse/egset))+
+(0.1315799717205844)*TSDELTALOG(TSLAG(egse))+
+(0.002629649907733779)*TSDELTALOG(TSLAG(egse,2))+
+(0.9287008343314474)*TSDELTALOG(egset)+
+(0.001580665878764003)*xgap2+
+(0.001580665878764003)*TSLAG(xgap2)
+
+$-----------------------------------------------
+$Government
+$S&L Government expenditures, current dollar
+IDENTITY> egsen
+EQ> egsen=
+(0.01)*pegsr*pxp*egse
+
+$-----------------------------------------------
+$Government
+$S&L Government expenditures, CW 2012 dollar, Trend
+IDENTITY> egset
+EQ> TSDELTALOG(egset)=
+(-0.32)+
+(-0.1)*LOG(0.01*TSLAG(pegsr*pxp*egset/xgdptn))+
+(1)*MOVAVG(hggdpt,4)/400
+
+$-----------------------------------------------
+$Government
+$S&L government employee compensation, cw 2012 dollar
+IDENTITY> egsl 
+EQ> TSDELTALOG(egsl)=
+(0.0003682770277494773)+
+(-0.1114151303946257)*LOG(TSLAG(egsl/egslt))+
+(0.1562467669415557)*TSDELTALOG(TSLAG(egsl))+
+(0.02155815410956755)*TSDELTALOG(TSLAG(egsl,2))+
+(0.7449614274122569)*TSDELTALOG(egslt)+
+(-0.001432565493088224)*xgap2+
+(0.001765173794440745)*TSLAG(xgap2)
+
+$-----------------------------------------------
+$Government
+$S&L government employee compensation, current dollar
+IDENTITY> egsln
+EQ> egsln=
+(0.01)*pgsl*egsl
+
+$-----------------------------------------------
+$Government
+$S&L government employee compensation, cw 2012 dollar, trend
+IDENTITY> egslt 
+EQ> TSDELTALOG(egslt)=
+(-0.259779)+
+(-0.1)*LOG(0.01*TSLAG(pgsl*egslt/xgdptn))+
+(1)*MOVAVG(hggdpt,4)/400
+
+$-----------------------------------------------
+$Household Expenditures
+$Residential investment expenditures, cw 2012 dollar
+$Household investment in residential structures is modeled using the
+$polynomial adjustment cost (PAC) framework
+IDENTITY> eh
+EQ> TSDELTALOG(eh)=
+(0.01309931436163227)*LOG(TSLAG(qeh/eh))+
+(0.370727139760127)*TSDELTALOG(TSLAG(eh))+
+(0.206060944066708)*TSDELTALOG(TSLAG(eh,2))+
+(1)*zeh+
+(-0.05620618046332654)*TSDELTA(TSLAG(rme))+
+(0.02793327971442171)*d83*TSDELTA(TSLAG(rme))
+
+$-----------------------------------------------
+$Household Expenditures
+$Residential investment expenditures
+IDENTITY> ehn
+EQ> ehn=
+(0.01)*phr*pxp*eh
+
+$-----------------------------------------------
+$Business Expenditures
+$Change in private inventories, cw 2012 dollar
+IDENTITY> ei
+EQ> ei=
+(4)*TSDELTA(ki)
+
+$-----------------------------------------------
+$
+$Business Expenditures
+$Change in business inventories, current
+IDENTITY> ein
+EQ> ein=
+(0.01)*pxp*pkir*ei
+
+$-----------------------------------------------
+$Foreign Trade
+$Imports of goods and services, cw 2012 dollar
+IDENTITY> em
+EQ> LOG(em)=
+LOG(TSLAG(em))+
+(0.5)*(emon/emn+TSLAG(emon/emn))*(TSDELTALOG(emo))+
+MOVAVG(empn/emn,2)*(TSDELTALOG(emp))
+
+$-----------------------------------------------
+$Foreign Trade
+$Imports of goods and services, current dollar
+IDENTITY> emn
+EQ> emn=
+emon+empn
+
+$-----------------------------------------------
+$Foreign Trade
+$Imports of goods and services ex. petroleum, cw 2012 dollar
+$The equation for non-petroleum imports has an error-correction
+$format. In the long run, the volume of imports depends on the level
+$of real domestic absorption with an elasticity of one, the relative
+$price of non-oil imports with an elasticity of minus one, and an
+$exogenous trend.
+IDENTITY> emo
+EQ> TSDELTALOG(emo)=
+(0.01620546980581163)+
+(-0.1807104996815989)*LOG(TSLAG(emo*pmo/100)/(TSLAG(uemot*xgdpn)))+
+(1.358186927724613)*TSDELTA(xgap2)/100+
+(1.637077186962015)*TSDELTA(TSLAG(xgap2))/100+
+(0.3188307105827468)*LOG(ddockm)+
+(0.4046942138546456)*LOG(ddockm/TSLAG(ddockm))
+
+$-----------------------------------------------
+$Foreign Trade
+$Imports of goods and services ex. petroleum
+IDENTITY> emon
+EQ> emon=
+(0.01)*pmo*emo
+
+$-----------------------------------------------
+$Foreign Trade
+$Petroleum imports, cw 2012 dollar
+IDENTITY> emp
+EQ> LOG(emp)=
+LOG(xgdp)+LOG(emptrt)+
+(0.048026)*(TSDELTALOG(pmp/pxb))+
+(0.022115)*TSLAG(xgap2)
+
+$-----------------------------------------------
+$Foreign Trade
+$Petroleum imports, current dollar
+IDENTITY> empn
+EQ> empn=
+(0.01)*pmp*emp
+
+$-----------------------------------------------
+$Foreign Trade
+$Exports of goods and services, cw 2012 dollar
+$Exports is modeled in an error-correction format. 
+IDENTITY> ex 
+EQ> TSDELTALOG(ex)=
+(0.8398526775741691)+
+(-0.1077278728634364)*LOG(TSLAG(ex*pxr*pxp*fpx)/TSLAG(fgdp*fpc))+
+(1.481642245331822)*TSDELTA(fxgap)/100+
+(1.027448537481708)*TSDELTA(TSLAG(fxgap))/100+
+(1.015857050459678)*ddockx
+
+$-----------------------------------------------
+$Foreign Trade
+$Exports of goods and services, current dollar
+IDENTITY> exn
+EQ> exn=
+(0.01)*pxp*pxr*ex
+
+$-----------------------------------------------
+$Foreign Trade
+$US current account balance, current dollar
+$The current account balance is equal to net exports (EXN-EMN) plus
+$net foreign investment income (FYNIN) and a discrepancy term (FCBRN).
+IDENTITY> fcbn
+EQ> fcbn=
+exn-emn+fynin+fcbrn
+
+$-----------------------------------------------
+$Foreign Trade
+$US current account balance residual, current dollar
+IDENTITY> fcbrn
+EQ> fcbrn=
+ufcbr*pxb*xbt/100
+
+$-----------------------------------------------
+$Foreign Activity
+$Foreign aggregate GDP (world, bilateral export weights)
+$The level of foreign GDP is determined via the identity that
+$links it to the level of potential foreign output (FGDPT) and
+$the foreign output gap (FXGAP).
+IDENTITY> fgdp
+EQ> fgdp=
+fgdpt*EXP(fxgap/100)
+
+$-----------------------------------------------
+$Foreign Activity
+$Foreign aggregate GDP (world, bilateral export weights), trend
+$In simulations, the level of trend foreign GDP moves in proportion with
+$level of U.S potential GDP in the long run. In the short run, the
+$rate of growth of the foreign trend varies one-for-one with the rate of growth
+$of U.S. potential output.
+IDENTITY> fgdpt
+EQ> TSDELTALOG(fgdpt)=
+(-0.458264)+
+(-0.1)*LOG(TSLAG(fgdpt/xgdpt))+
+(1)*MOVAVG(hggdpt,4)/400
+
+$-----------------------------------------------
+$Foreign Trade
+$Gross stock of claims of US residents on the rest of the world, current dollar
+IDENTITY> fnicn
+EQ> TSDELTA(fnicn)=
+(+0.54)*(LOG(fpc)-(LOG(TSLAG(fpc))))*TSLAG(fnicn)+
+(-0.67)*(LOG(fpx)-(LOG(TSLAG(fpx))))*TSLAG(fnicn)+
+rfnict*xgdptn
+
+$-----------------------------------------------
+$Foreign Trade
+$Gross stock of liabilities of US residents to the rest of the world, current dollar
+IDENTITY> fniln
+EQ> fniln=
+fnicn-fnin
+
+$-----------------------------------------------
+$Foreign Trade
+$Net stock of claims of US residents on the rest of the world, current dollar
+$The change in the net foreign investment position is equal to the
+$the sum of the current account balance expressed at a quarterly rate,
+$estimates of capital gains and losses on the gross investment
+$positions due to price and exchange rate changes, and a residual term.
+IDENTITY> fnin
+EQ> TSDELTA(fnin)=
+(0.25)*fcbn+
+(0.54)*TSDELTALOG(fpc)*TSLAG(fnicn)+
+(-0.32)*TSDELTALOG(pgdp)*TSLAG(fniln)+
+(-0.67)*TSDELTALOG(fpx)*TSLAG(fnicn)+
+(0.06)*TSDELTALOG(fpx)*TSLAG(fniln)+
++fnirn
+
+$-----------------------------------------------
+$Foreign Trade
+$Net stock of claims of US residents on the rest of the world, residual
+IDENTITY> fnirn
+EQ> fnirn=
+ufnir*xgdpn
+
+$-----------------------------------------------
+$Foreign Activity
+$Foreign aggregate consumer price (G39, import/export trade weights)
+IDENTITY> fpc
+EQ> fpc=
+TSLAG(fpc)*EXP(fpic/400)
+
+$-----------------------------------------------
+$Foreign Activity
+$Foreign consumer price inflation (G10)
+$Foreign CPI inflation is a function of a weighted average of past
+$and trend foreign inflation, the foreign output gap, and current and
+$lagged changes in the relative price of oil. Historical values of
+$trend inflation (FPITRG) are measured as a step function whose value
+$since 1991 is 2.1 percent.
+IDENTITY> fpi10
+EQ> fpi10=
+(0.6279749057317539)*MOVAVG(TSLAG(fpi10),4)+
+(0.3720250942682461)*fpitrg+
+(0.3221458278398038)*TSLAG(fxgap)
+
+$-----------------------------------------------
+$Foreign Activity
+$Foreign consumer price inflation, trend (G10)
+$The trend component of foreign inflation adjusts at 5 percent
+$per quarter to movements in actual foreign inflation.
+IDENTITY> fpi10t
+EQ> fpi10t=
+(0.95)*TSLAG(fpi10t)+
+(0.05)*fpi10
+
+$-----------------------------------------------
+$Foreign Activity
+$Foreign consumer price inflation (G39, bilateral export trade weights)
+$In the long run, foreign consumer price inflation as measured
+$on a G39 basis moves one for one with foreign inflation as
+$measured on a G10 basis.
+IDENTITY> fpic
+EQ> fpic=
+(2.027196898567632)+
+(0.6788298801616212)*fpi10+
+(0.3211701198383788)*TSLAG(fpic)
+
+$-----------------------------------------------
+$Foreign Activity
+$Nominal exchange rate (G39, import/export trade weights)
+IDENTITY> fpx
+EQ> fpx=
+fpxr*fpc/pcpi
+
+$-----------------------------------------------
+$Foreign Activity
+$Real exchange rate (G39, import/export trade weights)
+$The real exchange rate is determined via an open interest parity
+$condition based on real bond rates, augmented with a term in the ratio
+$of the net stock of U.S. claims on the rest of the world to U.S. GDP
+$that captures country risk. The equation is written as an identity
+$through the inclusion of a multiplicative residual, FPXRR.
+IDENTITY> fpxr
+EQ> LOG(fpxr)=
+LOG(fpxrr)+ 
+(0.048)*(rg10-zpi10f-frl10+fpi10t)+
+(0.5)*(fnin/xgdpn)
+
+$-----------------------------------------------
+$Foreign Activity
+$Real exchange rate residual
+$The unexplained component of the exchange rate error-corrects
+$to its long-run exogenous trend (FPXRRT).
+IDENTITY> fpxrr
+EQ> TSDELTALOG(fpxrr)=
+(0.02744058231523356)*LOG(TSLAG(fpxrrt/fpxrr))+
+(0.2110896761767876)*(TSDELTALOG(TSLAG(fpxrr)))+
+(1-0.2110896761767876)*TSDELTALOG(fpxrrt)
+
+$-----------------------------------------------
+$Foreign Activity
+$Foreign long-term interest rate (G10)
+$The foreign long-term interest rate (FRL10) is modeled using
+$a reduced-form error-correction specification in which the long rate
+$converges to the foreign short-term interest rate plus a constant
+$premium.
+IDENTITY> frl10
+EQ> TSDELTA(frl10)=
+(0.03753227212139513)+
+(-0.07704648128878299)*TSLAG(frl10-frs10)+
+(0.06550476702266198)*TSDELTA(TSLAG(frl10))+
+(0.369056454239088)*TSDELTA(frs10)+
+(0.1245511812496244)*TSDELTA(fxgap)
+
+$-----------------------------------------------
+$Foreign Activity
+$Foreign short-term interest rate (G10)
+$The foreign short-term interest rate (FRS10) is set either
+$according to a version of the Taylor rule (DFMPRR=0), or as the sum
+$of an exogenous real interest rate (RFRS10) and a four-quarter moving
+$average of foreign CPI inflation (DFMPRR=1).
+IDENTITY> frs10
+EQ> frs10=
+dfmprr*(
+(1.0)*TSLAG(frstar)+
+(1.0)*MOVAVG(fpi10,4)+
+(0.5)*(MOVAVG(fpi10,4)/4-fpitrg)+
+(1.0)*fxgap)+
+(1-dfmprr)*(rfrs10+MOVAVG(fpi10,4))
+
+$-----------------------------------------------
+$Foreign Activity
+$Equilibrium real short-term interest rate used in foreign Taylor rule
+$The estimate of the foreign equilibrium real short-term interest
+$rate used in the foreign Taylor rule is updated each period by
+$5 percent of the gap between the ex post real short rate and the
+$prior estimate.
+IDENTITY> frstar
+EQ> frstar=
+(0.95)*TSLAG(frstar)+
+(0.05)*(frs10-MOVAVG(fpi10,4))
+
+$-----------------------------------------------
+$Foreign Trade
+$Corporate taxes paid to rest of world, current dollar
+IDENTITY> ftcin
+EQ> ftcin=
+uftcin*ynicpn
+
+$-----------------------------------------------
+$Foreign Activity
+$Foreign output gap (world, bilateral export weights)
+$The equation for the foreign output gap is a reduced-form IS
+$curve. The gap depends on lags of the foreign output gap, the real
+$short-term foreign interest rate (FRS10 less a moving average of
+$FPI10), and the U.S. output gap (XGAP2). The coefficient on the
+$real short-term interest rate is set equal to the estimate from a
+$similar equation estimated on U.S. data.
+IDENTITY> fxgap
+EQ> fxgap=
+(1.290723676327916)*TSLAG(fxgap)+
+(-0.4680091148746248)*TSLAG(fxgap,2)+
+(-0.05)*(MOVAVG(TSLAG(frs10)-MOVAVG(TSLAG(fpi10),4),3)-frstar)+
+(0.03734559019022718)*TSLAG(xgap2)
+
+$-----------------------------------------------
+$Foreign Trade
+$Gross investment income received from the rest of the world, current dollar
+IDENTITY> fynicn
+EQ> fynicn=
+(0.01)*rfynic*TSLAG(fnicn) 
+
+$-----------------------------------------------
+$Foreign Trade
+$Gross investment income paid to the rest of the world, current dollar
+IDENTITY> fyniln
+EQ> fyniln=
+(0.01)*rfynil*TSLAG(fniln)
+
+$-----------------------------------------------
+$Foreign Trade
+$Net investment income received from the rest of the world, current dollar
+IDENTITY> fynin
+EQ> fynin=
+fynicn-fyniln
+
+$-----------------------------------------------
+$Government
+$Federal government debt stock held by the public, current dollar
+IDENTITY> gfdbtnp
+EQ> gfdbtnp=
+ugfdbtp*(TSLAG(gfdbtnp)-0.25*gfsrpn)
+
+$-----------------------------------------------
+$Government
+$Federal government debt stock held by the public, current dollar
+IDENTITY> gfdbtn
+EQ> gfdbtn=
+ugfdbt*gfdbtnp
+
+$-----------------------------------------------
+$Government
+$Federal Government budget surplus, residual
+IDENTITY> ugfsrp
+EQ> ugfsrp=
+(0.065666)*(1-0.947688)+0.947688*TSLAG(ugfsrp)
+
+$-----------------------------------------------
+$Government
+$Multiplicative factor for government civilian employment
+IDENTITY> uleg
+EQ> TSDELTALOG(uleg)=
+(-0.1)*(TSLAG(leg/lep)-adjlegrt)
+
+$-----------------------------------------------
+$Government
+$Government payments
+IDENTITY> gfexpn
+EQ> gfexpn=
+egfln+egfen+gtn+gfintn
+
+$-----------------------------------------------
+$Government
+$Federal government net interest payments, current dollar
+IDENTITY> gfintn
+EQ> gfintn=
+rgfint*TSLAG(gfdbtn)
+
+$-----------------------------------------------
+$Government
+$Government receipts and residual
+IDENTITY> gfrecn
+EQ> gfrecn=
+tpn+tcin+ugfsrp*xgdpn
+
+$-----------------------------------------------
+$Government
+$Federal government budget surplus, current dollar
+IDENTITY> gfsrpn
+EQ> gfsrpn=
+tpn+tcin-egfln-egfen-gtn-gfintn+ugfsrp*xgdpn
+
+$-----------------------------------------------
+$Government
+$Federal government net transfer payments, current dollar
+IDENTITY> gtn
+EQ> gtn=
+(0.01)*pgdp*gtr
+
+$-----------------------------------------------
+$Government
+$Government net transfer payments, deflated by PGDP
+IDENTITY> gtr
+EQ> gtr=
+(gtrd+gtrt)*xgdpt
+
+$-----------------------------------------------
+$Government
+$Deviation of ratio of government transfers to GDP from trend ratio
+IDENTITY> gtrd
+EQ> gtrd=
+(-0.000176387604876)*xgap2+
+(-0.00143470943)*MOVAVG(TSLAG(xgap2),4)+
+(0.862481931486)*(
+TSLAG(gtrd)-
+(-0.000176387604876)*TSLAG(xgap2)-
+(-0.00143470943)*MOVAVG(TSLAG(xgap2,2),4)
+)
+
+$-----------------------------------------------
+$Foreign Trade
+$Petroleum imports, cw 2012 dollar, trend growth rate
+IDENTITY> hgemp
+EQ> hgemp=
+(0.9)*TSLAG(hgemp)+
+(0.1)*400*LOG(emp/TSLAG(emp))
+
+$-----------------------------------------------
+$Aggregate Output Identities
+$Growth rate of GDP, cw 2012 dollar (annual rate)
+IDENTITY> hggdp
+EQ> hggdp=
+(400)*TSDELTALOG(xgdp)
+
+$-----------------------------------------------
+$Aggregate Output Identities
+$Trend growth rate of XGDP, cw 2012 dollar (annual rate)
+IDENTITY> hggdpt
+EQ> hggdpt=
+hxbt+huxb
+
+$-----------------------------------------------
+$Aggregate Output Identities
+$Trend growth rate of price of business investment (relative to PXB)
+IDENTITY> hgpbfir
+EQ> hgpbfir=
+(0.975)*TSLAG(hgpbfir)+0.025*400*LOG(pbfir*pxp/pxb/TSLAG(pbfir*pxp/pxb))
+
+$-----------------------------------------------
+$Wages and Prices
+$Trend growth rate of PKIR
+IDENTITY> hgpkir
+EQ> hgpkir=
+(0.9)*TSLAG(hgpkir)+
+(0.1)*400*LOG(pkir/TSLAG(pkir))
+
+$-----------------------------------------------
+$Expectations
+$Growth rate of real after-tax corporate profits
+IDENTITY> hgynid
+EQ> hgynid=
+(400)*TSDELTALOG((ynicpn-tcin)*0.5/pxb)
+
+$-----------------------------------------------
+$Business Expenditures
+$Growth rate of KS, cw 2012 dollar (compound annual rate)
+IDENTITY> hks
+EQ> hks=
+(400)*(ykbfin*TSDELTALOG(kbfi)+
+ykin*TSDELTALOG(ki))/(ykbfin+ykin)+hksr
+
+$-----------------------------------------------
+$Labor Market
+$Trend growth rate of LEP (annual rate)
+IDENTITY> hlept
+EQ> hlept=
+(400)*hqlfpr+
+(400)*TSDELTALOG(n16)
+
+$-----------------------------------------------
+$Labor Market
+$Trend growth rate of output per hour
+IDENTITY> hlprdt
+EQ> hlprdt=
+hxbt-hlept-hqlww
+
+$-----------------------------------------------
+$Aggregate Output Identities
+$Trend growth rate of multifactor productivity
+IDENTITY> hmfpt
+EQ> hmfpt=
+(0.055)+
+(0.95)*TSLAG(hmfpt)
+
+$-----------------------------------------------
+$Labor Market
+$Drift component of change in QLFPR
+IDENTITY> hqlfpr
+EQ> hqlfpr=
+(0.00)+
+(0.95)*TSLAG(hqlfpr)
+
+$-----------------------------------------------
+$Labor Market
+$Trend growth rate of workweek
+IDENTITY> hqlww
+EQ> hqlww=
+(0.95)*TSLAG(hqlww)+
+(1-0.95)*(-0.3129029344874886)
+
+$-----------------------------------------------
+$Wages and Prices
+$Drift term in stochastic component of trend ratio of PCNIA to PXP
+IDENTITY> huqpct
+EQ> huqpct=
+(0.00)+
+(0.95)*TSLAG(huqpct)
+
+$-----------------------------------------------
+$Aggregate Output Identities
+$Drift term in UXBT
+IDENTITY> huxb
+EQ> huxb=
+(1-dglprd)*(
+(-0.01613974358626877)+
+(0.95)*TSLAG(huxb)
+)
+
+$-----------------------------------------------
+$Aggregate Output Identities
+$Trend rate of growth of XB, cw 2012 dollar (annual rate)
+IDENTITY> hxbt
+EQ> hxbt=
+(0.725)*(hlept+hqlww+400*TSDELTALOG(lqualt))+
+(0.275)*hks+hmfpt+hxbtr
+
+$-----------------------------------------------
+$Aggregate Output Identities
+$Residual Factor (Trend rate of growth of XB)
+IDENTITY> hxbtr
+EQ> hxbtr=
+0
+
+$-----------------------------------------------
+$Nominal Income
+$Consumption of fixed capital, current dollar
+IDENTITY> jccan
+EQ> jccan=
+xgdpn*(
+(0.053902)*(1-(0.821408))+
+(0.821408)*TSLAG(jccan/xgdpn)+
+(1-0.821408)*TSLAG(pkbfir*kbfi)*jrbfi*TSLAG(pxp/xgdpn)*0.01
+)
+
+$-----------------------------------------------
+$Household Expenditures
+$Consumption of fixed capital, consumer durables
+IDENTITY> jkcd
+EQ> jkcd=
+jrcd*TSLAG(kcd)
+
+$-----------------------------------------------
+$Business Expenditures
+$Capital stock - BFI, 2012 dollar
+IDENTITY> kbfi
+EQ> kbfi=
+(pbfir/pkbfir)*ebfi/4+(1-jrbfi/4)*TSLAG(kbfi)
+
+$-----------------------------------------------
+$Household Expenditures
+$Stock of consumer durables, cw 2012 dollar
+IDENTITY> kcd
+EQ> kcd=
+(0.25)*ecd+(1-jrcd/4)*TSLAG(kcd)
+
+$-----------------------------------------------
+$Household Expenditures
+$Stock of residential structures, cw 2012 dollar
+IDENTITY> kh
+EQ> kh=
+(0.25)*eh+(1-jrh/4)*TSLAG(kh)
+
+$-----------------------------------------------
+$Business Expenditures
+$Stock of private inventories, cw 2012 dollar
+IDENTITY> ki
+EQ> TSDELTALOG(ki)=
+(-0.00120624751419073)+
+(0.01469206254903638)*(LOG(qkir)-LOG(TSLAG(ki/xfs)))+
+(0.4567399290262596)*(TSDELTALOG(TSLAG(ki))+0.00120624751419073)+
+(0.236031927797704)*TSDELTALOG(TSLAG(xfs))+
+(0.3072281431760363)*TSDELTALOG(TSLAG(xfs,2))
+
+$-----------------------------------------------
+$Business Expenditures
+$Capital services, 2012 dollar
+IDENTITY> ks
+EQ> LOG(ks)=
+LOG(TSLAG(ks))+hks/400
+
+$-----------------------------------------------
+$Government
+$Government civilian employment ex. gov. enterprise
+IDENTITY> leg
+EQ> LOG(leg)=
+LOG(uleg*(egfl+egsl)/lprdt)
+
+$-----------------------------------------------
+$Labor Market
+$Civilian employment (break adjusted)
+IDENTITY> leh
+EQ> leh=
+lep+leg+leo
+
+$-----------------------------------------------
+$Labor Market
+$Difference between household and business sector payroll employment, less government employment
+IDENTITY> leo
+EQ> LOG(leo)=
+LOG(qleor*qlf)+
+(0.7566675970336151)*LOG(TSLAG(leo/(qleor*qlf)))+
+(-0.01642583348237834)*TSLAG(xgap2)
+
+$-----------------------------------------------
+$Labor Market
+$Employment in  business sector (employee and  self-employed)
+IDENTITY> lep
+EQ> lep=
+lhp/lww
+
+$-----------------------------------------------
+$Labor Market
+$Potential employment in  business sector
+IDENTITY> leppot
+EQ> leppot=
+(qlf*(1-0.01*lurnat-qleor))/(1+adjlegrt)
+
+$-----------------------------------------------
+$Labor Market
+$Civilian labor force (break adjusted)
+IDENTITY> lf
+EQ> lf=
+lfpr*n16
+
+$-----------------------------------------------
+$Labor Market
+$Labor force participation rate
+IDENTITY> lfpr
+EQ> TSDELTA(lfpr)=
+hqlfpr+
+(0.5676074828293328)*TSLAG(qlfpr-lfpr)+
+(-0.0008751892020969236)*TSLAG(lur-lurnat)
+
+$-----------------------------------------------
+$Labor Market
+$Aggregate labor hours,  business sector (employee and  self-employed)
+IDENTITY> lhp
+EQ> TSDELTALOG(lhp)=
+(0.2022897898011354)*LOG(TSLAG(qlhp/lhp))+
+(0.2028806748568088)*TSDELTALOG(TSLAG(lhp))+
+(0.3720641848854363)*zlhp+
+(0.6279358151145638)*(TSDELTALOG(xbo)-TSLAG(hlprdt)/400)+
+(-0.127396041937203)*(TSDELTALOG(TSLAG(xbo))-TSLAG(hlprdt,2)/400)
+
+$-----------------------------------------------
+$Labor Market
+$Trend labor productivity
+IDENTITY> lprdt
+EQ> LOG(lprdt)=
+LOG(xbt/leppot/qlww)
+
+$-----------------------------------------------
+$Labor Market
+$Civilian unemployment rate (break adjusted)
+IDENTITY> lur
+EQ> lur=
+100*(1-leh/lf)
+
+$-----------------------------------------------
+$Labor Market
+$Natural rate of unemployment
+IDENTITY> lurnat
+EQ> lurnat=
+TSLAG(lurnat)
+
+$-----------------------------------------------
+$Labor Market
+$Workweek,  business sector (employee and self-employed)
+IDENTITY> lww
+EQ> TSDELTALOG(lww)=
+hqlww/400+
+(0.195710350653204)*LOG(TSLAG(qlww/lww))+
+(0.3184816471961936)*(TSDELTALOG(lhp)-(hlept+hqlww)/400)
+
+$-----------------------------------------------
+$Financial Sector
+$Multiplicative discrepancy for the difference between XGDI and XGDO
+IDENTITY> mei
+EQ> LOG(mei)=
+(1.00)*LOG(TSLAG(mei))
+
+$-----------------------------------------------
+$Financial Sector
+$Multiplicative discrepancy for the difference between XGDP and XGDO
+IDENTITY> mep
+EQ> LOG(mep)=
+(1.00)*LOG(TSLAG(mep))
+
+$-----------------------------------------------
+$Aggregate Output Identities
+$Multifactor productivity, trend level
+IDENTITY> mfpt
+EQ> LOG(mfpt)=
+(0.0)+LOG(TSLAG(mfpt))+hmfpt/400
+
+$-----------------------------------------------
+$Wages and Prices
+$Price level of BFI compared to PXP
+IDENTITY> pbfir
+EQ> LOG(pbfir)=
+LOG(TSLAG(pbfir))+pipxnc/400+dpadj-TSDELTALOG(pxp)
+
+$-----------------------------------------------
+$Wages and Prices
+$Price index for consumer durables, cw (relative to to PCNIA)
+IDENTITY> pcdr
+EQ> TSDELTALOG(pcdr)=
+(-0.003334518696912942)+
+(0.5098481943420772)*TSDELTALOG(TSLAG(pcdr))
+
+$-----------------------------------------------
+$Wages and Prices
+$Price index for personal consumption expenditures on energy (relative to PCXFE)
+IDENTITY> pcer
+EQ> TSDELTALOG(pcer)=
+(0.2488609533651416)*TSDELTALOG(pmp/pcxfe)
+
+$-----------------------------------------------
+$Wages and Prices
+$Price index for personal consumption expenditures on food (relative to PCXFE)
+IDENTITY> pcfr
+EQ> TSDELTALOG(pcfr)=
+(-0.1753151166404203)*LOG(TSLAG(pcfr/pcfrt))+
+(-5.59454305651988/100000)+
+(0.3855084844618753)*TSDELTALOG(TSLAG(pcfr))+
+(0.02031018771733943)*TSDELTALOG(TSLAG(pcfr,2))+
+(0.3388841893424357)*TSDELTALOG(TSLAG(pcfr,3))+
+(0.3176985579727371)*TSDELTALOG(pcfrt)
+
+$-----------------------------------------------
+$Wages and Prices
+$Price index for housing services, cw (relative to to PCNIA)
+IDENTITY> pchr
+EQ> TSDELTALOG(pchr)=
+(0.0006138065838894166)+
+(0.5980639856669541)*TSDELTALOG(TSLAG(pchr))
+
+$-----------------------------------------------
+$Wages and Prices
+$Price index for personal consumption expenditures, cw (NIPA definition)
+IDENTITY> pcnia
+EQ> TSDELTALOG(pcnia)=
+picnia/400
+
+$-----------------------------------------------
+$Wages and Prices
+$Price index for non-durable goods and non-housing services, cw (relative to to PCNIA
+IDENTITY> pcor
+EQ> LOG(pcor)=
+LOG(TSLAG(pcor))+
+(-0.1436)*LOG(pcdr/TSLAG(pcdr))+
+(-0.217)*LOG(pchr/TSLAG(pchr))
+
+$-----------------------------------------------
+$Wages and Prices
+$Consumer price index,total
+IDENTITY> pcpi
+EQ> pcpi=
+upcpi*pcnia
+
+$-----------------------------------------------
+$Wages and Prices
+$Consumer price index,excluding food and energy
+IDENTITY> pcpix
+EQ> pcpix=
+upcpix*pcxfe
+
+$-----------------------------------------------
+$Wages and Prices
+$Price index for personal consumption expendits ex. food and energy, cw (NIPA definit
+IDENTITY> pcxfe
+EQ> TSDELTALOG(pcxfe)=
+picxfe/400
+
+$-----------------------------------------------
+$Government
+$Price index for federal government expenditures, CW (relative to PXP)
+IDENTITY> pegfr
+EQ> TSDELTALOG(pegfr)=
+pipxnc/400+dpadj-TSDELTALOG(pxp)
+
+$-----------------------------------------------
+$Government
+$Price index for S&L government expenditures, CW (relative to PXP)
+IDENTITY> pegsr
+EQ> LOG(pegsr)=
+LOG(TSLAG(pegsr))+pipxnc/400+dpadj-TSDELTALOG(pxp)
+
+$-----------------------------------------------
+$Wages and Prices
+$Price index for GDP, cw
+IDENTITY> pgdp
+EQ> pgdp=
+100*xgdpn/xgdp
+
+$-----------------------------------------------
+$Wages and Prices
+$Price index for federal government employee compensation, cw
+IDENTITY> pgfl
+EQ> LOG(pgfl)=
+LOG(upgfl*pl/lprdt)
+
+$-----------------------------------------------
+$Wages and Prices
+$Price index for S&L government employee compensation, cw
+IDENTITY> pgsl
+EQ> LOG(pgsl)=
+LOG(upgsl*pl/lprdt)
+
+$-----------------------------------------------
+$Financial Sector
+$Loan Performance House Price Index
+IDENTITY> phouse
+EQ> TSDELTALOG(phouse)=
+(0.005158779390135185)+
+(0.9018869955145716)*TSDELTALOG(TSLAG(phouse))+
+(-0.01156922658993683)*LOG(TSLAG(phouse/(pchr*pcnia)))
+
+$-----------------------------------------------
+$Wages and Prices
+$Price index for residential investment, cw (relative to PXP)
+IDENTITY> phr
+EQ> TSDELTALOG(phr)=
+(0.0)+pipxnc/400+dpadj-TSDELTALOG(pxp)
+
+$-----------------------------------------------
+$Wages and Prices
+$Four-quarter percent change in PCE prices
+IDENTITY> pic4
+EQ> pic4=
+(100)*(pcnia/TSLAG(pcnia,4)-1)
+
+$-----------------------------------------------
+$Wages and Prices
+$Inflation rate, personal consumption expenditures, cw
+IDENTITY> picnia
+EQ> picnia=
+picxfe+
+(0.0399)*400*TSDELTALOG(pcer)+
+(0.0726)*400*TSDELTALOG(pcfr)
+
+$-----------------------------------------------
+$Wages and Prices
+$Four-quarter percent change core in PCE prices
+IDENTITY> picx4
+EQ> picx4=
+100*(pcxfe/TSLAG(pcxfe,4)-1)
+
+$-----------------------------------------------
+$Wages and Prices
+$Inflation rate, personal consumption expenditures, ex. food and energy, cw
+IDENTITY> picxfe
+EQ> picxfe=
+(
+(0.671147437396)*TSLAG(picxfe)+
+(0.98)*zpicxfe+
+(1-(0.98))*(1-(0.671147437396))*TSLAG(ptr)+
+(0.00191485982247)*400*LOG(TSLAG(qpcnia/pcnia))
+)/
+(1+(0.671147437396)*(0.98))
+
+$-----------------------------------------------
+$Wages and Prices
+$Annualized rate of growth of EI hourly compensation
+IDENTITY> pieci
+EQ> pieci=
+(
+(0.25)*
+(0.684663089102)*((1-(0.98))*MOVSUM(TSLAG(pieci),3)+TSLAG(pieci,4))+
+(0.98)*zpieci+
+(1-(0.98))*(1-(0.684663089102))*(TSLAG(ptr+hlprdt-400*huqpct))+
+(-0.0167232072082)*(TSLAG(lur-lurnat))+
+(0.000957429911235)*400*LOG(TSLAG(qpl/pl))
+)/
+(1+0.25*(0.684663089102)*(0.98))
+
+$-----------------------------------------------
+$Wages and Prices
+$Inflation rate, GDP, cw
+IDENTITY> pigdp
+EQ> pigdp=
+400*TSDELTALOG(pgdp)
+
+$-----------------------------------------------
+$Wages and Prices
+$Rate of growth of PL
+IDENTITY> pipl
+EQ> pipl=
+pieci
+
+$-----------------------------------------------
+$Wages and Prices
+$Inflation rate, price of adjusted final sales excluding consumption (annual rate)
+IDENTITY> pipxnc
+EQ> pipxnc=
+picnia+
+(-1.99)*400*huqpct+
+(0.462801)*TSLAG(pipxnc-picnia+1.99*400*huqpct)+
+(0.229745)*TSLAG(pipxnc-picnia+1.99*400*huqpct,2)+
+(-0.284477)*(0.1312355937)*400*TSDELTALOG(fpxr)+
+(0.025)*400*LOG(TSLAG(qpxnc/pxnc))
+
+$-----------------------------------------------
+$Wages and Prices
+$Ratio of price of BFI stock (KBFI) to PXP
+IDENTITY> pkbfir
+EQ> pkbfir=
+upkbfir*pbfir
+
+$-----------------------------------------------
+$Wages and Prices
+$Compensation per hour,  business
+IDENTITY> pl
+EQ> LOG(pl)=
+LOG(TSLAG(pl))+pipl/400
+
+$-----------------------------------------------
+$Wages and Prices
+$Price index for imports ex. petroleum, cw
+IDENTITY> pmo
+EQ> TSDELTALOG(pmo)=
+(0.0)+
+(0.3776815983707077)*(LOG(qpmo/TSLAG(pmo))+0.64*LOG(TSLAG(fpc/fpx))+0.36*LOG(TSLAG(pxb)))+
+(0.2343966603329429)*TSDELTALOG(fpc/fpx)+
+(1-(0.2343966603329429))*TSDELTALOG(pxb)
+
+$-----------------------------------------------
+$Wages and Prices
+$Price index for petroleum imports
+IDENTITY> pmp
+EQ> pmp=
+upmp*poil
+
+$-----------------------------------------------
+$Wages and Prices
+$Price of imported oil ( dollar per barrel)
+IDENTITY> poil
+EQ> poil=
+poilr*pxb
+
+$-----------------------------------------------
+$Wages and Prices
+$Price of imported oil, relative to price index for bus. sector output
+IDENTITY> poilr
+EQ> TSDELTALOG(poilr)=
+(-0.2189945671343387)*LOG(TSLAG(poilr/poilrt))+
+(-0.007197716577611038)+
+(0.3903451978006103)*TSDELTALOG(TSLAG(poilr))+
+(0.3940619235700209)*TSDELTALOG(poilrt)
+
+$-----------------------------------------------
+$Expectations
+$10-year expected PCE price inflation (Survey of Professional Forecasters)
+IDENTITY> ptr
+EQ> ptr=
+(0.9)*TSLAG(ptr)+
+(0.05)*TSLAG(picxfe)+
+(0.05)*TSLAG(pitarg)
+
+$-----------------------------------------------
+$Wages and Prices
+$Price index for business output
+IDENTITY> pxb
+EQ> pxb=
+upxb*pgdp
+
+$-----------------------------------------------
+$Wages and Prices
+$Price of adjusted final sales excluding consumption
+IDENTITY> pxnc
+EQ> TSDELTALOG(pxnc)=
+pipxnc/400
+
+$-----------------------------------------------
+$Wages and Prices
+$Price index for final sales plus imports less gov. labor
+IDENTITY> pxp
+EQ> LOG(pxp)=
+LOG(TSLAG(pxp))+
+(0.6469)*LOG(pcnia/TSLAG(pcnia))+
+(0.3531)*LOG(pxnc/TSLAG(pxnc))
+
+$-----------------------------------------------
+$Wages and Prices
+$Price index for exports, cw (relative to PXP)
+IDENTITY> pxr
+EQ> TSDELTALOG(pxr)=
+(0.0)+pipxnc/400+dpadj-TSDELTALOG(pxp)
+
+$-----------------------------------------------
+$Business Expenditures
+$Desired level of investment in business investment
+IDENTITY> qebfi
+EQ> qebfi=
+xb*vbfi*(hxbt/100-0.01*hgpbfir+jrbfi)
+
+$-----------------------------------------------
+$Household Expenditures
+$Desired level of consumption (FRBUS definition)
+IDENTITY> qec
+EQ> LOG(qec)=
+(0.3653279067017037)+
+(0.493602432836492)*LOG(zyh-zyht-zyhp)+
+(0.1858248429134642)*LOG(zyht)+
+(1-(0.493602432836492)-(0.1858248429134642)-(0.1873934907158843))*LOG(zyhp)+
+(0.1873934907158843)*LOG(wpo+wps)
+
+$-----------------------------------------------
+$Household Expenditures
+$Target level of consumption of durable goods, trending component
+IDENTITY> qecd
+EQ> qecd=
+qec*(
+jrcd/4+
+MOVAVG(hggdpt,8)/400+
+(-0.5843539676290892)*hgpcdr/400
+)*EXP(
+(2.4132166616749)+
+(-0.5843539676290892)*(LOG(pcdr)+LOG(rccd))
+)
+
+$-----------------------------------------------
+$Household Expenditures
+$Desired level of consumption of nondurable goods and nonhousing services
+IDENTITY> qeco
+EQ> LOG(qeco)=
+(-0.3258628580621771)+LOG(qec/pcor)
+
+$-----------------------------------------------
+$Household Expenditures
+$Target level of residential investment
+IDENTITY> qeh
+EQ> qeh=
+qec*(
+jrh/4+
+MOVAVG(hggdpt,16)/400
+)*EXP(
+(1.909300384501687)+
+(-1.0)*LOG(phr*pxp/pcnia)+
+(-0.1168105360328174)*LOG(rcch)
+)
+
+$-----------------------------------------------
+$Business Expenditures
+$Desired Inventory Sales Ratio
+IDENTITY> qkir
+EQ> LOG(qkir)=
+(1-dglprd)*
+(-0.001885366737710053)+LOG(TSLAG(qkir))
+
+$-----------------------------------------------
+$Labor Market
+$Desired level of civilian labor force
+IDENTITY> qlf
+EQ> qlf=
+qlfpr*n16
+
+$-----------------------------------------------
+$Labor Market
+$Trend labor force participation rate
+IDENTITY> qlfpr
+EQ> qlfpr=
+TSLAG(qlfpr)+hqlfpr
+
+$-----------------------------------------------
+$Labor Market
+$Desired level of  business labor hours
+IDENTITY> qlhp
+EQ> qlhp=
+xbo/lprdt
+
+$-----------------------------------------------
+$Labor Market
+$Trend workweek,  business sector (employee and  self-employed)
+IDENTITY> qlww
+EQ> LOG(qlww)=
+LOG(TSLAG(qlww))+TSLAG(hqlww)/400
+
+$-----------------------------------------------
+$Wages and Prices
+$Desired level of consumption price
+IDENTITY> qpcnia
+EQ> LOG(qpcnia)=
+LOG(qpxp*uqpct)
+
+$-----------------------------------------------
+$Wages and Prices
+$Desired level of compensation per hour, trending component
+IDENTITY> qpl
+EQ> LOG(qpl)=
+LOG(pl)+
+(1.0)*LOG(pxb/qpxb)
+
+$-----------------------------------------------
+$Wages and Prices
+$Random walk component of non-oil import prices
+IDENTITY> qpmo
+EQ> LOG(qpmo)=
+LOG(TSLAG(qpmo))+
+(-0.003347)
+
+$-----------------------------------------------
+$Wages and Prices
+$Desired price level of private output ex. energy, housing, and farm
+IDENTITY> qpxb
+EQ> LOG(qpxb)=
+LOG(pwstar)+
+(0.0)+
+(1.0)*LOG(pl/lprdt)
+
+$-----------------------------------------------
+$Wages and Prices
+$Desired level of nonconsumption price
+IDENTITY> qpxnc
+EQ> LOG(qpxnc)=
+LOG(pxnc)+
+(2.98507462687)*LOG(qpxp/pxp)+
+(-1.98507462687)*LOG(qpcnia/pcnia)
+
+$-----------------------------------------------
+$Wages and Prices
+$Desired price level of adjusted final sales
+IDENTITY> qpxp
+EQ> qpxp=
+100*(xpn+(0.01*qpxb*xb-xbn))/xp
+
+$-----------------------------------------------
+$Nominal Income
+$Desired level of dividends
+IDENTITY> qynidn
+IF> (ynicpn-tcin)>=0.01
+EQ> LOG(qynidn)=
+(-0.9155533588082586)+
+(0.3548225925232601)*d79a+
+(1)*LOG(ynicpn-tcin)
+IDENTITY> qynidn
+IF> (ynicpn-tcin)<0.01
+EQ> LOG(qynidn)=
+(-0.9155533588082586)+
+(0.3548225925232601)*d79a+
+(1)*LOG(0.01)
+
+$-----------------------------------------------
+$Financial Sector
+$S&P BBB corporate bond rate
+IDENTITY> rbbb
+EQ> rbbb=
+rbbbp+rg10
+
+$-----------------------------------------------
+$Financial Sector
+$S&P BBB corporate bond rate, risk/term premium
+IDENTITY> rbbbp
+EQ> rbbbp=
+(1.972218)+
+(-0.189051)*zgap10+
+(0.848879)*(TSLAG(rbbbp)+
+(-1.972218)+
+(0.189051)*TSLAG(zgap10))
+
+$-----------------------------------------------
+$Business Expenditures
+$After-tax real financial cost of capital for business investment
+IDENTITY> rbfi
+EQ> rbfi=
+0.5*(
+7.2+
+(1-trfcim)*(rg5+rbbb-rg10)+
+(-1.0)*zpib5
+)+
+(0.5)*req
+
+$-----------------------------------------------
+$Financial Sector
+$New car loan rate at finance companies
+IDENTITY> rcar
+EQ> rcar=
+(2.078274063162198)+
+(-1.163656496933583)*d79a+
+(-0.008285302552441101)*((1-d79a)*t47)+
+(0.6967481719141809)*TSLAG(rcar)+
+(0.1016693350391095)*rg5+
+(0.2015824930467097)*TSLAG(rg5)
+
+$-----------------------------------------------
+$Household Expenditures
+$Cost of capital for consumer durables
+IDENTITY> rccd
+IF> (100*jrcd+rcar-zpi5)>=0.01
+EQ> rccd=
+100*jrcd+rcar-zpi5
+IDENTITY> rccd
+IF> (100*jrcd+rcar-zpi5)<0.01
+EQ> rccd=
+0.01
+
+$-----------------------------------------------
+$Household Expenditures
+$Cost of capital for residential investment
+IDENTITY> rcch
+IF> (100*jrh+(1-trfpm/100)*(rme+100*trspp)-zpi10)>=0.1
+EQ> rcch=
+100*jrh+(1-trfpm/100)*(rme+100*trspp)-zpi10
+IDENTITY> rcch
+IF> (100*jrh+(1-trfpm/100)*(rme+100*trspp)-zpi10)<0.1
+EQ> rcch=
+0.1
+
+$-----------------------------------------------
+$Financial Sector
+$Rate of capital gain on the non-equity portion of household wealth
+IDENTITY> rcgain
+EQ> rcgain=
+picx4+
+(-0.4097125100056558)+
+(0.4243575136593637)*xgap2+
+(0.2257857751190805)*(TSLAG(rcgain)-TSLAG(picx4)-
+(-0.4097125100056558)-
+(0.4243575136593637)*xgap2)
+
+$-----------------------------------------------
+$Financial Sector
+$Real expected rate of return on equity
+IDENTITY> req
+EQ> req=
+rg30-zpic30+reqp
+
+$-----------------------------------------------
+$Financial Sector
+$Real expected rate of return on equity, premium component
+IDENTITY> reqp
+EQ> reqp=
+(2.903727)+
+(0.808086)*rbbbp+
+(0.795819)*(TSLAG(reqp)-
+(2.903727)-
+(0.808086)*TSLAG(rbbbp))
+
+$-----------------------------------------------
+$Financial Sector
+$Federal funds rate
+IDENTITY> rff
+IF> (rffrule>=rffmin) & (TSLAG(dmptr)*rffrule+(1-TSLAG(dmptr))*rffmin>=rffmin)
+EQ> rff=
+(1-dmptrsh)*(rffrule)+dmptrsh*((((TSLAG(dmptr)*rffrule+(1-TSLAG(dmptr))*rffmin))))
+IDENTITY> rff
+IF> (rffrule>=rffmin) & (TSLAG(dmptr)*rffrule+(1-TSLAG(dmptr))*rffmin<rffmin)
+EQ> rff=
+(1-dmptrsh)*(rffrule)+dmptrsh*((((rffmin))))
+IDENTITY> rff
+IF> (rffrule<rffmin) & (TSLAG(dmptr)*rffrule+(1-TSLAG(dmptr))*rffmin>=rffmin)
+EQ> rff=
+(1-dmptrsh)*(rffmin)+dmptrsh*((((TSLAG(dmptr)*rffrule+(1-TSLAG(dmptr))*rffmin))))
+IDENTITY> rff
+IF> (rffrule<rffmin) & (TSLAG(dmptr)*rffrule+(1-TSLAG(dmptr))*rffmin<rffmin)
+EQ> rff=
+(1-dmptrsh)*(rffmin)+dmptrsh*((((rffmin))))
+
+$-----------------------------------------------
+$Financial Sector
+$Value of eff. federal funds rate given by estimated policy rule
+IDENTITY> rffalt
+EQ> rffalt=
+(0.0551)+
+(1.2)*TSLAG(rff)+
+(-0.39)*TSLAG(rff,2)+
+(0.6954)*xgap2+
+(-0.5168)*TSLAG(xgap2)+
+(0.3287)*MOVAVG(picxfe,4)
+
+$-----------------------------------------------
+$Financial Sector
+$Value of eff. federal funds rate given by the inertial Taylor rule
+IDENTITY> rffintay
+EQ> rffintay=
+(0.85)*TSLAG(rff)+
+(1-(0.85))*(
+rstar+MOVAVG(picxfe,4)+
+(0.5)*(MOVAVG(picxfe,4)-pitarg)+
+(1.0)*xgap2
+)
+
+$-----------------------------------------------
+$Financial Sector
+$Federal funds rate
+IDENTITY> rffrule
+EQ> rffrule=
+dmpex*rfffix+
+dmprr*(
+rrfix+MOVAVG(picxfe,4)
+)+
+dmptay*rfftay+
+dmptlr*rfftlr+
+dmpintay*rffintay+
+dmpalt*rffalt
+
+$-----------------------------------------------
+$Financial Sector
+$Value of eff. federal funds rate given by the Taylor rule with output gap
+IDENTITY> rfftay
+EQ> rfftay=
+rstar+
+MOVAVG(picxfe,4)+
+(0.5)*(MOVAVG(picxfe,4)-pitarg)+
+(1.0)*xgap2
+
+$-----------------------------------------------
+$Financial Sector
+$Value of eff. federal funds rate given by the Taylor rule with unemployment gap
+IDENTITY> rfftlr
+EQ> rfftlr=
+rstar+
+(-0.5)*pitarg+
+(0.375)*MOVSUM(picxfe,4)+
+(1.1)*(lurnat+deuc*leuc-lur)
+
+$-----------------------------------------------
+$Foreign Trade
+$Average yield earned on gross claims of US residents on the rest of the world
+IDENTITY> rfynic
+EQ> TSDELTA(rfynic)=
+(0.2442546132781247)+
+(-0.1404162075757351)*TSLAG(rfynic-rfynil)+
+(0.1444243609858357)*TSDELTA(TSLAG(rfynic))+
+(0.6315036756054792)*TSDELTA(rfynil)
+
+$-----------------------------------------------
+$Foreign Trade
+$Average yield earned on liabilities of US residents on the rest of the world
+IDENTITY> rfynil
+EQ> TSDELTA(rfynil)=
+(0.1769720233111774)+
+(-0.2484056734487245)*TSLAG(rfynil)+
+(0.08033864767698434)*TSLAG(rg10)+
+(0.09023943103709648)*TSLAG(rtb)+
+(0.04450523477009356)*TSLAG(reqp)+
+(0.1328188190918866)*TSDELTA(TSLAG(rfynil))+
+(0.08760339070734239)*TSDELTA(rg10)+
+(0.2614346003836546)*TSDELTA(rtb)+
+(0.0179349568621618)*TSDELTA(reqp)
+
+$-----------------------------------------------
+$Financial Sector
+$10-year Treasury bond rate
+IDENTITY> rg10
+EQ> rg10=
+zrff10+rg10p
+
+$-----------------------------------------------
+$Financial Sector
+$10-year Treasury bond rate, term premium
+IDENTITY> rg10p
+EQ> rg10p=
+(1.050750815840056)+
+(-0.4606588068717281)*zgap10+
+(0.2287218644237361)*d8095+
+(0.9201040880647524)*(
+TSLAG(rg10p)+
+(-1.050750815840056)+
+(0.4606588068717281)*TSLAG(zgap10)+
+(-0.2287218644237361)*TSLAG(d8095)
+)
+
+$-----------------------------------------------
+$Financial Sector
+$30-year Treasury bond rate
+IDENTITY> rg30
+EQ> rg30=
+zrff30+rg30p
+
+$-----------------------------------------------
+$Financial Sector
+$30-year Treasury bond rate, term premium
+IDENTITY> rg30p
+EQ> rg30p=
+(1.420673758140307)+
+(-0.6248294677066961)*zgap30+
+(0.1349942505218234)*d8095+
+(0.9381086057081572)*(
+TSLAG(rg30p)+
+(-1.420673758140307)+
+(0.6248294677066961)*TSLAG(zgap30)+
+(-0.1349942505218234)*TSLAG(d8095)
+)
+
+$-----------------------------------------------
+$Financial Sector
+$5-year Treasury note rate
+IDENTITY> rg5
+EQ> rg5=
+zrff5+rg5p
+
+$-----------------------------------------------
+$Financial Sector
+$5-year Treasury note rate. term premium
+IDENTITY> rg5p
+EQ> rg5p=
+(0.6912438755770502)+
+(-0.3495644809998469)*zgap05+
+(0.9022132931202672)*(
+TSLAG(rg5p)+
+(-0.6912438755770502)+
+(0.3495644809998469)*TSLAG(zgap05)
+)
+
+$-----------------------------------------------
+$Financial Sector
+$Average rate of interest on existing federal debt
+IDENTITY> rgfint
+EQ> rgfint=
+(
+(0.86)*TSLAG(rgfint)+
+(0.14)*TSLAG(rgw)
+)*TSLAG(gfdbtn,2)/TSLAG(gfdbtn)+
+TSLAG(rgw)*(1-TSLAG(gfdbtn,2)/TSLAG(gfdbtn))+
+(0.003726285406154968)
+
+$-----------------------------------------------
+$Financial Sector
+$Approximate average rate of interest on new federal debt
+IDENTITY> rgw
+EQ> rgw=
+(0.00495)*rtb+
+(0.00271)*rg5+
+(0.00129)*rg10+
+(0.00105)*rg30
+
+$-----------------------------------------------
+$Financial Sector
+$Interest rate on conventional mortgages
+IDENTITY> rme
+EQ> TSDELTA(rme)=
+(0.515870426113512)+
+(0.6286405556840244)*TSDELTA(rg10)+
+(0.2555601487902845)*d87*TSDELTA(rg10)+
+(0.2889775740676342)*(TSLAG(rg10-rme))+
+(0.05071546489585005)*d87*(TSLAG(rg10-rme))
+
+$-----------------------------------------------
+$Financial Sector
+$Real federal funds rate
+IDENTITY> rrff
+EQ> rrff=
+rff-MOVAVG(picxfe,4)
+
+$-----------------------------------------------
+$Expectations
+$Expected long-run real federal funds rate
+IDENTITY> rrtr
+EQ> rrtr=
+(0.97)*TSLAG(rrtr)+
+(0.03)*rrff
+
+$-----------------------------------------------
+$Nominal Income
+$Personal saving rate
+IDENTITY> rspnia
+EQ> rspnia=
+100*yhsn/ydn
+
+$-----------------------------------------------
+$Financial Sector
+$Equilibrium real federal funds rate (for monetary policy reaction functions)
+IDENTITY> rstar
+EQ> rstar=
+TSLAG(rstar)+
+(0.05)*((rrff-TSLAG(rstar))*drstar)
+
+$-----------------------------------------------
+$Financial Sector
+$3-month Treasury bill rate
+IDENTITY> rtb
+EQ> rtb=
+(-0.05102548358978556)+
+(0.7997187921520415)*TSLAG(rtb)+
+(0.1113735515796583)*TSLAG(rtb,2)+
+(0.7701225626671688)*rff+
+(-0.6812149063988686)*TSLAG(rff)
+
+$-----------------------------------------------
+$Business Expenditures
+$User cost of capital for business investment
+IDENTITY> rtbfi
+EQ> rtbfi=
+(0.01*rbfi+jrbfi-0.01*hgpbfir)*((1-0.01*tritc-trfcim*(1-tapddp*0.01*tritc)*tdpv)/(1-trfcim))*(pkbfir*pxp/pxb)
+
+$-----------------------------------------------
+$Business Expenditures
+$User cost of capital for inventories
+IDENTITY> rtinv
+EQ> rtinv=
+(0.01*rbfi-0.01*hgpkir)*((pxp*pkir+TSLAG(pxp)*TSLAG(pkir))/2)/pxb
+
+$-----------------------------------------------
+$Expectations
+$Expected federal funds rate in the long run (Blue Chip)
+IDENTITY> rtr
+EQ> rtr=
+rrtr+ptr
+
+$-----------------------------------------------
+$Government
+$Government corporate income tax accruals, current dollar
+IDENTITY> tcin
+EQ> tcin=
+trci*ynicpn
+
+$-----------------------------------------------
+$Government
+$Government personal income tax and non-tax receipts, current dollar
+IDENTITY> tpn
+EQ> tpn=
+trp*(ypn-gtn)
+
+$-----------------------------------------------
+$Government
+$Average government corporate income tax rate
+IDENTITY> trci
+EQ> trci=
+trcit+
+(0.00706626139452)*xgap2+
+(0.810247648208)*(TSLAG(trci)-TSLAG(trcit)+
+(-0.00706626139452)*TSLAG(xgap2))
+
+$-----------------------------------------------
+$Government
+$Average government tax rate for personal income tax and non-tax receipts
+IDENTITY> trp
+EQ> trp=
+(1)*trpt+
+(0.603942358608)*(TSLAG(trp-trpt))+
+(0.236576213581)*(TSLAG(trp-trpt,2))+
+(0.000630587773923)*xgap2
+
+$-----------------------------------------------
+$Government
+$Average government tax rate for personal income tax, trend
+IDENTITY> trpt
+EQ> trpt=
+dfpex*trptx+
+dfpdbt*(
+TSLAG(trpt)+
+(0.05)*TSLAG(gfdbtnp/xgdpn-gfdrt)+
+(0.5)*(TSLAG(gfdbtnp/xgdpn-gfdrt)-TSLAG(gfdbtnp/xgdpn-gfdrt,2))
+)+
+dfpsrp*(
+TSLAG(trpt)+
+(-0.1)*(TSLAG(gfsrpn/xgdpn-gfsrt-0.0075*xgap2))
+)
+
+$-----------------------------------------------
+$Government
+$Average tax rate on household income
+IDENTITY> tryh
+EQ> tryh=
+(tpn)/(yhln+yhptn)
+
+$-----------------------------------------------
+$Wages and Prices
+$Stochastic component of trend ratio of PCNIA to PXP
+IDENTITY> uqpct
+EQ> LOG(uqpct)=
+(0.0)+LOG(TSLAG(uqpct))+huqpct
+
+$-----------------------------------------------
+$Aggregate Output Identities
+$Stochastic component of trend ratio of XGDPT to XBT
+IDENTITY> uxbt
+EQ> LOG(uxbt)=
+LOG(TSLAG(uxbt))+0.0025*huxb
+
+$-----------------------------------------------
+$Nominal Income
+$Corporate profits, residual
+IDENTITY> uynicpnr
+EQ> uynicpnr=
+(-0.073960)*(1-(0.779183))+
+(0.779183)*TSLAG(uynicpnr)
+
+$-----------------------------------------------
+$Business Expenditures
+$Desired investment-output ratio
+IDENTITY> vbfi
+EQ> vbfi=
+uvbfi*(pkbfir/pbfir)/rtbfi
+
+$-----------------------------------------------
+$Financial Sector
+$Household property wealth ex. stock market, real
+IDENTITY> wpo
+EQ> wpo=
+wpon/(0.01*pcnia)
+
+$-----------------------------------------------
+$Financial Sector
+$Household property wealth ex. stock market, current dollar
+IDENTITY> wpon
+EQ> wpon=
+TSLAG(wpon)*EXP(
+(1-
+(0.4106759138763171))*rcgain/400+
+(0.4106759138763171)*(TSDELTALOG(phouse))
+)+
+(0.25)*(ydn-ecnian-yhibn)+
+(0.25)*(0.01*pcdr*pcnia*(ecd-jkcd))
+
+$-----------------------------------------------
+$Financial Sector
+$Household stock market wealth, real
+IDENTITY> wps
+EQ> wps=
+wpsn/(0.01*pcnia)
+
+$-----------------------------------------------
+$Financial Sector
+$Household stock market wealth, current dollar
+IDENTITY> wpsn
+EQ> LOG(wpsn)=
+LOG((ynicpn-tcin)*0.5)+
+(-0.25)*(req-zdivgr)+
+LOG(25)+
+(1.0)
+
+$-----------------------------------------------
+$Aggregate Output Identities
+$Business output (BEA definition), cw 2012 dollar
+IDENTITY> xb
+EQ> xb=
+xbn/(pxb/100)
+
+$-----------------------------------------------
+$Nominal Income
+$Business output (BEA definition), current dollar
+IDENTITY> xbn
+EQ> xbn=
+pxb/100*xbo+xgdpn-xgdo*pgdp/100
+
+$-----------------------------------------------
+$Aggregate Output Identities
+$Business output, adjusted for measurement error, cw  2012 dollar
+IDENTITY> xbo
+EQ> LOG(xbo)=
+LOG(xbt)+
+(1.324705489432872)*xgap2/100
+
+$-----------------------------------------------
+$Aggregate Output Identities
+$Potential business output, cw 2012 dollar
+IDENTITY> xbt
+EQ> LOG(xbt)=
+(0.725)*(LOG(leppot)+LOG(qlww)+LOG(lqualt))+
+(0.275)*LOG(ks)+LOG(mfpt)+LOG(xbtr)
+
+$-----------------------------------------------
+$Aggregate Output Identities
+$Residual Factor (Potential business output)
+IDENTITY> xbtr
+EQ> LOG(xbtr)=
+(0.95)*LOG(TSLAG(xbtr))
+
+$-----------------------------------------------
+$Aggregate Output Identities
+$Final sales of gross domestic product, cw 2012 dollar
+IDENTITY> xfs
+EQ> TSDELTALOG(xfs)=
+(0.6849)*TSDELTALOG(ecnia)+
+(0.0386)*TSDELTALOG(eh)+
+(0.1324)*TSDELTALOG(ebfi)+
+(0.0429)*TSDELTALOG(egfe)+
+(0.0223)*TSDELTALOG(egfl)+
+(0.0395)*TSDELTALOG(egse)+
+(0.0691)*TSDELTALOG(egsl)+
+(0.1203)*TSDELTALOG(ex)+
+(-0.1399)*TSDELTALOG(emo)+
+(-0.0101)*TSDELTALOG(emp)
+
+$-----------------------------------------------
+$Nominal Income
+$Final sales of gross domestic product, current dollar
+IDENTITY> xfsn
+EQ> xfsn=
+xgdpn-ein
+
+$-----------------------------------------------
+$Aggregate Output Identities
+$Output gap for  business plus oil imports  (100*(actual/potential -1)
+IDENTITY> xgap
+EQ> xgap=
+100*(xbo/xbt-1)
+
+$-----------------------------------------------
+$Aggregate Output Identities
+$Output gap for GDP (100*(actual/potential -1)
+IDENTITY> xgap2
+EQ> xgap2=
+100*(xgdo/xgdpt-1)
+
+$-----------------------------------------------
+$Aggregate Output Identities
+$Gross domestic income, cw 2012 dollar
+IDENTITY> xgdi
+EQ> xgdi=
+xgdo*mei
+
+$-----------------------------------------------
+$Nominal Income
+$Gross domestic income, current dollar
+IDENTITY> xgdin
+EQ> xgdin=
+xgdi*(pgdp/100)
+
+$-----------------------------------------------
+$Aggregate Output Identities
+$Gross domestic product, adjusted for measurement error, cw 2012 dollar
+IDENTITY> xgdo
+EQ> xgdo=
+xgdp/mep
+
+$-----------------------------------------------
+$Aggregate Output Identities
+$GDP, cw 2012 dollar
+IDENTITY> xgdp
+EQ> TSDELTALOG(xgdp)=
+(0.9985)*TSDELTALOG(xfs)+
+(0.6264)*TSDELTALOG(ki)+
+(-0.6249)*TSDELTALOG(TSLAG(ki))
+
+$-----------------------------------------------
+$Nominal Income
+$GDP, current dollar
+IDENTITY> xgdpn
+EQ> xgdpn=
+xpn+ein-emn+egfln+egsln
+
+$-----------------------------------------------
+$Aggregate Output Identities
+$Potential GDP, cw 2012 dollar
+IDENTITY> xgdpt
+EQ> LOG(xgdpt)=
+LOG(xbt*uxbt)
+
+$-----------------------------------------------
+$Aggregate Output Identities
+$Potential GDP, current dollar
+IDENTITY> xgdptn
+EQ> xgdptn=
+(0.01)*pgdp*xgdpt
+
+$-----------------------------------------------
+$Aggregate Output Identities
+$Final sales plus imports less government labor, cw 2012 dollar
+IDENTITY> xp
+EQ> LOG(xp)=
+LOG(TSLAG(xp))+
+(0.6526679404)*TSDELTALOG(ecnia)+
+(0.0361108836)*TSDELTALOG(eh)+
+(0.11825695358)*TSDELTALOG(ebfi)+
+(0.04216893278)*TSDELTALOG(egfe)+
+(0.0365822346)*TSDELTALOG(egse)+
+(0.114213055)*TSDELTALOG(ex)
+
+$-----------------------------------------------
+$Nominal Income
+$Final sales plus imports less government labor, current dollar
+IDENTITY> xpn
+EQ> xpn=
+(0.01)*pxp*xp
+
+$-----------------------------------------------
+$Nominal Income
+$Disposable income
+IDENTITY> ydn
+EQ> ydn=
+uyd*(ypn-tpn)
+
+$-----------------------------------------------
+$Nominal Income
+$Income, household, total (real after-tax)
+IDENTITY> yh
+EQ> yh=
+yhl+yht+yhp
+
+$-----------------------------------------------
+$Nominal Income
+$Income, household, total, ratio to XGDP, cyclical component (real after-tax)
+IDENTITY> yhgap
+EQ> yhgap=
+100*LOG(yhshr/zyhst)
+
+$-----------------------------------------------
+$Nominal Income
+$Consumer interest payments to business
+IDENTITY> yhibn
+EQ> yhibn=
+uyhibn*xgdpn
+
+$-----------------------------------------------
+$Nominal Income
+$Income, household, labor compensation (real after-tax)
+IDENTITY> yhl
+EQ> yhl=
+(1-tryh)*yhln/(0.01*pcnia)
+
+$-----------------------------------------------
+$Nominal Income
+$Income, household, labor compensation
+IDENTITY> yhln
+EQ> yhln=
+uyhln*(yniln)
+
+$-----------------------------------------------
+$Nominal Income
+$Income, household, property (real after-tax)
+IDENTITY> yhp
+EQ> yhp=
+((1-tryh)*yhptn+yhpntn)/(0.01*pcnia)
+
+$-----------------------------------------------
+$Household Expenditures
+$Imputed income of the stock of consumer durables, 2012 dollar
+IDENTITY> yhpcd
+EQ> LOG(yhpcd)=
+LOG(0.053750)+LOG(TSLAG(kcd))
+
+$-----------------------------------------------
+$Nominal Income
+$Income, household, property, ratio to YH, cyclical component (real after-tax)
+IDENTITY> yhpgap
+EQ> yhpgap=
+100*LOG(yhpshr/zyhpst)
+
+$-----------------------------------------------
+$Nominal Income
+$Income, household, property, non-taxable component
+IDENTITY> yhpntn
+EQ> yhpntn=
+(0.01)*pcnia*pcdr*yhpcd+
+(-1.0)*yhibn+ynicpn+
+(-1.0)*tcin-ynidn+
+(-0.01)*zpi10*gfdbtn
+
+$-----------------------------------------------
+$Nominal Income
+$Income, household, property, ratio to YH (real after-tax)
+IDENTITY> yhpshr
+EQ> yhpshr=
+yhp/yh
+
+$-----------------------------------------------
+$Nominal Income
+$Income, household, property, taxable component
+IDENTITY> yhptn
+EQ> yhptn=
+uyhptn*(ynirn+gfintn+ynidn+yhibn)
+
+$-----------------------------------------------
+$Nominal Income
+$Income, household, total, ratio to XGDP (real after-tax)
+IDENTITY> yhshr
+EQ> yhshr=
+yh/xgdp
+
+$-----------------------------------------------
+$Nominal Income
+$Personal saving
+IDENTITY> yhsn
+EQ> yhsn=
+yhln+yhtn+yhptn-tpn-ecnian-yhibn+uyhsn*xgdptn
+
+$-----------------------------------------------
+$Nominal Income
+$Income, household, transfer (real after-tax), net basis
+IDENTITY> yht
+EQ> yht=
+yhtn/(0.01*pcnia)
+
+$-----------------------------------------------
+$Nominal Income
+$Income, household, transfer, ratio to YH, cyclical component (real after-tax)
+IDENTITY> yhtgap
+EQ> yhtgap=
+100*LOG(yhtshr/zyhtst)
+
+$-----------------------------------------------
+$Nominal Income
+$Income, household, transfer payments. net basis
+IDENTITY> yhtn
+EQ> yhtn=
+uyhtn*gtn
+
+$-----------------------------------------------
+$Nominal Income
+$Income, household, transfer, ratio to YH (real after-tax)
+IDENTITY> yhtshr
+EQ> yhtshr=
+yht/yh
+
+$-----------------------------------------------
+$Nominal Income
+$Income from stock of BFI
+IDENTITY> ykbfin
+EQ> ykbfin=
+(0.01)*rtbfi*pxb*(kbfi+TSLAG(kbfi))/2
+
+$-----------------------------------------------
+$Nominal Income
+$Income from stock of inventories
+IDENTITY> ykin
+EQ> ykin=
+(0.01)*rtinv*pxb*(ki+TSLAG(ki))/2
+
+$-----------------------------------------------
+$Nominal Income
+$Corporate profits (national income component)
+IDENTITY> ynicpn
+IF> ynin-yniln-ynirn+uynicpnr*xgdpn>=tcin+0.01*xgdpn
+EQ> ynicpn=
+ynin-yniln-ynirn+uynicpnr*xgdpn
+IDENTITY> ynicpn
+IF> ynin-yniln-ynirn+uynicpnr*xgdpn<tcin+0.01*xgdpn
+EQ> ynicpn=
+tcin+0.01*xgdpn
+
+$-----------------------------------------------
+$Nominal Income
+$Dividends (national income component)
+IDENTITY> ynidn
+EQ> ynidn=ymsdn+
+EXP(
+LOG(pxb)+
+LOG(TSLAG((ynidn-ymsdn)/pxb))+
+(0.1072695065113163)*LOG(TSLAG(qynidn/(ynidn-ymsdn)))+
+(-0.2095634314107719)*(LOG(TSLAG((ynidn-ymsdn)/pxb))-LOG(TSLAG((ynidn-ymsdn)/pxb,2)))+
+(1.0)*zynid
+)
+
+$-----------------------------------------------
+$Nominal Income
+$Labor income (national income component)
+IDENTITY> yniln
+EQ> yniln=
+(0.01)*uyl*(pl*lhp+pgfl*egfl+pgsl*egsl)
+
+$-----------------------------------------------
+$Nominal Income
+$National income
+IDENTITY> ynin
+EQ> ynin=
+uyni*(xgdin+fynin-jccan)
+
+$-----------------------------------------------
+$Government
+$Net interest, rental and proprietors' incomes (national income components)
+IDENTITY> ynirn
+EQ> ynirn=xgdpn*(
+(0.007593)+
+(0.944044)*TSLAG(ynirn/xgdpn)+
+(0.074817)*0.01*TSDELTA(rbbb)
+)
+
+$-----------------------------------------------
+$Nominal Income
+$Personal income
+IDENTITY> ypn
+EQ> ypn=
+uyp*(yhln+yhtn+yhptn)
+
+$-----------------------------------------------
+$Expectations
+$Expected growth rate of real dividends, for WPSN eq. (VAR exp.)
+IDENTITY> zdivgr
+EQ> zdivgr=
+(0.009757264257434617)*TSLEAD(hgynid)+
+(0.9902427357425654)*TSLEAD(zdivgr)
+
+$-----------------------------------------------
+$Expectations
+$Expected growth rate of business output EBFI (VAR exp.)
+IDENTITY> zebfi
+EQ> zebfi=
+(-0.0000000000000001836241195103586)+
+(-0.0004311442119548698)*TSLAG(picnia)+
+(-0.0005071417360301063)*TSLAG(picnia,2)+
+(-0.00003881819160880394)*TSLAG(picnia,3)+
+(0.0001679875754395107)*TSLAG(picnia,4)+
+(-0.0009752514829426216)*TSLAG(rff)+
+(0.0004172696850180997)*TSLAG(rff,2)+
+(0.000009804022481480238)*TSLAG(rff,3)+
+(0.0004025448938499502)*TSLAG(rff,4)+
+(0.0001456328815931833)*TSLAG(rtr)+
+(0.0008091165641542619)*TSLAG(ptr)+
+(0.0006914817407124366)*TSLAG(xgap)+
+(-0.001524629901125206)*TSLAG(xgap,2)+
+(0.0001821021224146923)*TSLAG(xgap,3)+
+(0.0001709602428972692)*TSLAG(xgap,4)+
+(0.01429456576547675)*TSDELTALOG(TSLAG(qebfi))+
+(0.01004233676573099)*TSDELTALOG(TSLAG(qebfi,2))+
+(0.005011839434648968)*TSDELTALOG(TSLAG(qebfi,3))+
+(0.003887436951496095)*TSDELTALOG(TSLAG(qebfi,4))+
+(0.1422818153960116)*TSLAG(hxbt)/400+
+(-0.1422818153960531)*TSLAG(hgpbfir)/400
+
+$-----------------------------------------------
+$Expectations
+$Expected growth rate of target durable consumption, for ECD eq. (VAR exp.)
+IDENTITY> zecd
+EQ> zecd=
+(-0.0004244330449108246)*TSLAG(picnia)+
+(-0.000566112732916264)*TSLAG(picnia,2)+
+(-0.0004278354154853733)*TSLAG(picnia,3)+
+(0.000004275450618659433)*TSLAG(picnia,4)+
+(-0.001333637468405136)*TSLAG(rff)+
+(0.001785102754320539)*TSLAG(rff,2)+
+(-0.0002714744059753036)*TSLAG(rff,3)+
+(0.0004596118643773856)*TSLAG(rff,4)+
+(0.0004286088490690454)*TSLAG(xgap2)+
+(-0.001112480888047013)*TSLAG(xgap2,2)+
+(0.00003611331309391688)*TSLAG(xgap2,3)+
+(0.00007975907057934714)*TSLAG(xgap2,4)+
+(0.001414105742693884)*TSLAG(ptr)+
+(-0.0006396027443177932)*TSLAG(rtr)+
+(-0.0001084142645104688)*TSLAG(yhgap)+
+(0.0002103631242011464)*TSLAG(yhgap,2)+
+(0.0001780616641343914)*TSLAG(yhgap,3)+
+(0.0001469127491672944)*TSLAG(yhgap,4)+
+(-0.0001398804267539158)*TSLAG(yhtgap)+
+(-0.00003380075732963865)*TSLAG(yhtgap,2)+
+(0.0001669757937064113)*TSLAG(yhtgap,3)+
+(0.0001135069368207403)*TSLAG(yhtgap,4)+
+(0.0001241231278850025)*TSLAG(yhpgap)+
+(-0.0002035919714857632)*TSLAG(yhpgap,2)+
+(0.00005798918819304864)*TSLAG(yhpgap,3)+
+(0.0001142807758711503)*TSLAG(yhpgap,4)+
+(1.020354953788767)*TSLAG(hggdpt)/400+
+(-0.752244722798112)*TSLAG(hgpcdr)/400+
+(0.030859810575484)*TSDELTALOG(TSLAG(qecd))+
+(0.0288465643523214)*TSDELTALOG(TSLAG(qecd,2))+
+(-0.007704793774557718)*TSDELTALOG(TSLAG(qecd,3))+
+(-0.01236375512939394)*TSDELTALOG(TSLAG(qecd,4)) 
+
+$-----------------------------------------------
+$Expectations
+$Expected growth rate of target nondurables and nonhousing services, for ECO eq (VAR
+IDENTITY> zeco
+EQ> zeco=
+(-0.0000752202049495858)*TSLAG(picnia)+
+(-0.00007944069331813561)*TSLAG(picnia,2)+
+(-0.00002059316996140204)*TSLAG(picnia,3)+
+(0.0001004397794984203)*TSLAG(picnia,4)+
+(0.00002128321856982191)*TSLAG(rff)+
+(0.00001703531535880844)*TSLAG(rff,2)+
+(0.00005501237638104223)*TSLAG(rff,3)+
+(0.0000368085672111148)*TSLAG(rff,4)+
+(-0.0006301710369219651)*TSLAG(xgap2)+
+(0.0002738755865138929)*TSLAG(xgap2,2)+
+(0.0001330197561306166)*TSLAG(xgap2,3)+
+(-0.00003466191405309875)*TSLAG(xgap2,4)+
+(0.00007481428873071481)*TSLAG(ptr)+
+(-0.0001301394775207934)*TSLAG(rtr)+
+(-0.000574849476125713)*TSLAG(yhgap)+
+(0.000315791553755267)*TSLAG(yhgap,2)+
+(0.0003970054362973829)*TSLAG(yhgap,3)+
+(0.00002606365933680952)*TSLAG(yhgap,4)+
+(-0.00006065913885267499)*TSLAG(yhtgap)+
+(-0.000005861516974911094)*TSLAG(yhtgap,2)+
+(0.00004608692992415466)*TSLAG(yhtgap,3)+
+(-0.00003675339093791547)*TSLAG(yhtgap,4)+
+(0.0002055017720241992)*TSLAG(yhpgap)+
+(-0.0002409377143989024)*TSLAG(yhpgap,2)+
+(-0.0001318122876593039)*TSLAG(yhpgap,3)+
+(-0.00008998120362836395)*TSLAG(yhpgap,4)+
+(0.4694132786802296)*TSLAG(hggdpt)/400+
+(0.07322397247249938)*TSDELTALOG(TSLAG(qeco))+
+(0.02932374759217591)*TSDELTALOG(TSLAG(qeco,2))+
+(0.00714849213690236)*TSDELTALOG(TSLAG(qeco,3))+
+(0.00907784707291976)*TSDELTALOG(TSLAG(qeco,4))
+
+$-----------------------------------------------
+$Expectations
+$Expected growth rate of target residential investment, for EH eq. (VAR exp.)
+IDENTITY> zeh
+EQ> zeh=
+(-0.00007825906447294479)*TSLAG(picnia)+
+(-0.00005221776500989767)*TSLAG(picnia,2)+
+(-0.0000511617748264036)*TSLAG(picnia,3)+
+(0.00001061188019850692)*TSLAG(picnia,4)+
+(0.0001524702142702607)*TSLAG(rff)+
+(0.0001154619164109844)*TSLAG(rff,2)+
+(0.0000694775905299206)*TSLAG(rff,3)+
+(0.000006915284271997218)*TSLAG(rff,4)+
+(0.0005016959759548423)*TSLAG(xgap2)+
+(-0.0005314894632374061)*TSLAG(xgap2,2)+
+(-0.0001527167228830226)*TSLAG(xgap2,3)+
+(0.00004422297252718166)*TSLAG(xgap2,4)+
+(0.0001710267241107452)*TSLAG(ptr)+
+(-0.0003443250054832286)*TSLAG(rtr)+
+(0.00005547462567554765)*TSLAG(yhgap)+
+(0.00004078231691046518)*TSLAG(yhgap,2)+
+(-0.00003078619404779462)*TSLAG(yhgap,3)+
+(-0.000004584642539780123)*TSLAG(yhgap,4)+
+(0.000007136415206693365)*TSLAG(yhtgap)+
+(0.00001470739436481251)*TSLAG(yhtgap,2)+
+(0.00003830847423082347)*TSLAG(yhtgap,3)+
+(0.00003271967551086854)*TSLAG(yhtgap,4)+
+(-0.00006992854917184709)*TSLAG(yhpgap)+
+(0.0000004550096611877513)*TSLAG(yhpgap,2)+
+(0.00005504613762415508)*TSLAG(yhpgap,3)+
+(0.00002864192627076078)*TSLAG(yhpgap,4)+
+(0.4277729262319505)*TSLAG(hggdpt)/400+
+(0.004266303023854793)*TSDELTALOG(TSLAG(qeh))+
+(-0.001472171716551593)*TSDELTALOG(TSLAG(qeh,2))+
+(-0.003348261838736116)*TSDELTALOG(TSLAG(qeh,3))+
+(-0.004008022551322911)*TSDELTALOG(TSLAG(qeh,4))
+
+$-----------------------------------------------
+$Expectations
+$Expected output gap, for RG5 eq. (VAR exp.)
+IDENTITY> zgap05
+EQ> zgap05=
+(0.05479365264340726)*xgap+
+(0.9452063473565927)*TSLEAD(zgap05)
+
+$-----------------------------------------------
+$Expectations
+$Expected output gap, for RG10 eq. (VAR exp.)
+IDENTITY> zgap10
+EQ> zgap10=
+(0.03007455810944507)*xgap+
+(0.969925441890555)*TSLEAD(zgap10)
+
+$-----------------------------------------------
+$Expectations
+$Expected output gap, for RG30 eq. (VAR exp.)
+IDENTITY> zgap30
+EQ> zgap30=
+(0.01410658898201937)*xgap+
+(0.9858934110179807)*TSLEAD(zgap30) 
+
+$-----------------------------------------------
+$Expectations
+$Expected output gap, for ECD eq. (VAR exp.)
+IDENTITY> zgapc2
+EQ> zgapc2=
+(-0.01418483319860699)*TSLAG(picnia)+
+(-0.00438957847118337)*TSLAG(picnia,2)+
+(-0.006089864990632572)*TSLAG(picnia,3)+
+(0.001274535866759684)*TSLAG(picnia,4)+
+(-0.0426889990257948)*TSLAG(rff)+
+(0.007759946050458921)*TSLAG(rff,2)+
+(0.01912856687923288)*TSLAG(rff,3)+
+(-0.002207952775923244)*TSLAG(rff,4)+
+(0.1943845369683129)*TSLAG(xgap2)+
+(-0.07640072342643054)*TSLAG(xgap2,2)+
+(-0.01132460234847898)*TSLAG(xgap2,3)+
+(-0.01555183396619014)*TSLAG(xgap2,4)+
+(0.02338974079366426)*TSLAG(ptr)+
+(0.01800843887202016)*TSLAG(rtr)
+
+$-----------------------------------------------
+$Expectations
+$Expected growth rate of target aggregate hours (VAR exp.)
+IDENTITY> zlhp
+EQ> zlhp=
+(-0.0002023213774340967)*TSLAG(picnia)+
+(-0.00006547091555559659)*TSLAG(picnia,2)+
+(-0.0001720246830139474)*TSLAG(picnia,3)+
+(0.0000313937564958239)*TSLAG(picnia,4)+
+(-0.001047476022547437)*TSLAG(rff)+
+(0.0002598839064585707)*TSLAG(rff,2)+
+(0.0005079095801600575)*TSLAG(rff,3)+
+(-0.0000419862687487686)*TSLAG(rff,4)+
+(0.0003216688046775128)*TSLAG(rtr)+
+(0.0004084232195080358)*TSLAG(ptr)+
+(-0.005754964729358652)*TSLAG(xgap)+
+(0.005816827692544119)*TSLAG(xgap,2)+
+(-0.0002034859294983795)*TSLAG(xgap,3)+
+(-0.0002715434817101584)*TSLAG(xgap,4)+
+(0.6857946901749924)*(TSDELTALOG(TSLAG(xbo))-TSDELTALOG(TSLAG(lprdt)))+
+(0.1113240674326222)*TSLAG(hlept+hqlww)/400
+
+$-----------------------------------------------
+$Expectations
+$Expected cons. price infl., for RCCH, RRMET, and YHPNTN eqs. (10-yr mat.) (VAR exp.)
+IDENTITY> zpi10
+EQ> zpi10=
+(0.03007455810944507)*picnia+
+(0.969925441890555)*TSLEAD(zpi10)
+
+$-----------------------------------------------
+$Expectations
+$Expected cons. price infl., for FPXR eq. (10-yr mat.) (VAR exp.)
+IDENTITY> zpi10f
+EQ> zpi10f=
+(0.03007455810944507)*picnia+
+(0.969925441890555)*TSLEAD(zpi10f)
+
+$-----------------------------------------------
+$Expectations
+$Expected cons. price infl., for RCCD eq. (5-yr mat.) (VAR exp.)
+IDENTITY> zpi5
+EQ> zpi5=
+(0.08178762749631196)*TSLAG(picnia)+
+(0.02218684188675673)*TSLAG(picnia,2)+
+(0.02501945218256163)*TSLAG(picnia,3)+
+(-0.00009007062448078559)*TSLAG(picnia,4)+
+(-0.1456765471759016)*TSLAG(rff)+
+(-0.03113773606787808)*TSLAG(rff,2)+
+(-0.02949319295743922)*TSLAG(rff,3)+
+(-0.0275798582145864)*TSLAG(rff,4)+
+(0.2338873344157305)*TSLAG(rtr)+
+(0.8710961490588724)*TSLAG(ptr)+
+(0.174192252057006)*TSLAG(xgap)+
+(-0.07184023126885179)*TSLAG(xgap,2)+
+(0.04066371951581198)*TSLAG(xgap,3)+
+(0.04494462398507848)*TSLAG(xgap,4)
+
+$-----------------------------------------------
+$Expectations
+$Expected output price infl., for RPD eq. (5-yr mat.) (VAR exp.)
+IDENTITY> zpib5
+EQ> zpib5=
+(0.05479365264340726)*400*TSDELTALOG(pxb)+
+(0.9452063473565927)*TSLEAD(zpib5)
+
+$-----------------------------------------------
+$Expectations
+$Expected cons. price infl., for REQ eq. (30-yr mat.) (VAR exp.)
+IDENTITY> zpic30
+EQ> zpic30=
+(0.01410658898201937)*picnia+
+(0.9858934110179807)*TSLEAD(zpic30) 
+
+$-----------------------------------------------
+$Expectations
+$Expected 4-qtr consumer price inflation (8 qtrs. in the future) (VAR exp.)
+IDENTITY> zpic58
+EQ> zpic58=
+TSLEAD(pic4,8)
+
+$-----------------------------------------------
+$Expectations
+$Expected value of picxfe in the next quarter (VAR exp.)
+IDENTITY> zpicxfe
+EQ> zpicxfe=
+TSLEAD(picxfe) 
+
+$-----------------------------------------------
+$Expectations
+$Expected value of pieci in the next quarter (VAR exp.)
+IDENTITY> zpieci
+EQ> zpieci=
+TSLEAD(pieci)
+
+$-----------------------------------------------
+$Expectations
+$Expected federal funds rate, for RG10 eq. (10-yr mat.) (VAR exp.)
+IDENTITY> zrff10
+EQ> zrff10=
+(0.03007455810944507)*rff+
+(0.969925441890555)*TSLEAD(zrff10)
+
+$-----------------------------------------------
+$Expectations
+$Expected federal funds rate, for RG30 eq. (30-yr mat.) (VAR exp.)
+IDENTITY> zrff30
+EQ> zrff30=
+(0.01410658898201937)*rff+
+(0.9858934110179807)*TSLEAD(zrff30)
+
+$-----------------------------------------------
+$Expectations
+$Expected federal funds rate, for RG5 eq. (5-yr mat.) (VAR exp.)
+IDENTITY> zrff5
+EQ> zrff5=
+(0.05479365264340726)*rff+
+(0.9452063473565927)*TSLEAD(zrff5)
+
+$-----------------------------------------------
+$Expectations
+$Expected level of real after-tax household income, for QEC eq. (VAR exp.)
+IDENTITY> zyh
+EQ> LOG(zyh)=
+(0.00008403034216398836)*picnia+
+(0.0007023129900742578)*TSLAG(picnia)+
+(0.0005988312485600414)*TSLAG(picnia,2)+
+(0.00046906873529373)*TSLAG(picnia,3)+
+(-0.002112400975583133)*rff+
+(0.0001656602252725924)*TSLAG(rff)+
+(-0.0007780393043584456)*TSLAG(rff,2)+
+(0.0002906813774138189)*TSLAG(rff,3)+
+(0.0009057626374626405)*xgap2+
+(0.002687425542518095)*TSLAG(xgap2)+
+(0.0006823597205465298)*TSLAG(xgap2,2)+
+(-0.001256388702977828)*TSLAG(xgap2,3)+
+(-0.001854243316194259)*ptr+
+(0.002434098677388386)*rtr+
+(0.004161665385029935)*yhgap+
+(0.0007501557850814375)*TSLAG(yhgap)+
+(-0.0001921235465779609)*TSLAG(yhgap,2)+
+(-0.0003602829076187046)*TSLAG(yhgap,3)+
+(0.9999999999999565)*LOG(zyhst*xgdpt)
+
+$-----------------------------------------------
+$Expectations
+$Expected level of real after-tax property income, for QEC eq. (VAR exp.)
+IDENTITY> zyhp
+EQ> LOG(zyhp)=
+(0.0008637359958914742)*picnia+
+(0.001043993924986531)*TSLAG(picnia)+
+(0.0009412688975392932)*TSLAG(picnia,2)+
+(0.000458916642717137)*TSLAG(picnia,3)+
+(-0.001544432205587824)*rff+
+(-0.0006407725735247019)*TSLAG(rff)+
+(-0.000877216982815245)*TSLAG(rff,2)+
+(-0.00004075028532698682)*TSLAG(rff,3)+
+(-0.002036934910319444)*xgap2+
+(0.003079022876028106)*TSLAG(xgap2)+
+(0.001533670579319286)*TSLAG(xgap2,2)+
+(-0.0009794433698078088)*TSLAG(xgap2,3)+
+(-0.003307915461364551)*ptr+
+(0.003103172047474443)*rtr+
+(0.004220697583687526)*yhgap+
+(0.0001307621492671122)*TSLAG(yhgap)+
+(0.00005342070875074808)*TSLAG(yhgap,2)+
+(-0.0008349442433696925)*TSLAG(yhgap,3)+
+(0.002251478648554251)*yhpgap+
+(0.0002014050026037725)*TSLAG(yhpgap)+
+(-0.0004274985452560566)*TSLAG(yhpgap,2)+
+(-0.0002520786346265581)*TSLAG(yhpgap,3)+
+(0.9999999999999468)*LOG(zyhpst*zyhst*xgdpt)
+
+$-----------------------------------------------
+$Expectations
+$Expected trend share of property income in household income
+IDENTITY> zyhpst
+EQ> LOG(zyhpst)=
+LOG(TSLAG(zyhpst))+
+(0.05)*TSLAG(yhpgap)/100
+
+$-----------------------------------------------
+$Expectations
+$Expected trend ratio of household income to GDP
+IDENTITY> zyhst
+EQ> LOG(zyhst)=
+LOG(TSLAG(zyhst))+
+(0.05)*TSLAG(yhgap)/100
+
+$-----------------------------------------------
+$Expectations
+$Expected level of real transfer income, for QEC eq. (VAR exp.)
+IDENTITY> zyht
+EQ> LOG(zyht)=
+(-0.000334830912493238)*picnia+
+(0.0004734682680155963)*TSLAG(picnia)+
+(0.0002798072585528634)*TSLAG(picnia,2)+
+(0.000327960879431146)*TSLAG(picnia,3)+
+(-0.002500279763979537)*rff+
+(0.0008855681526303969)*TSLAG(rff)+
+(-0.001214881268111102)*TSLAG(rff,2)+
+(0.00008524329709881322)*TSLAG(rff,3)+
+(0.002172842548066125)*xgap2+
+(0.00313028920932204)*TSLAG(xgap2)+
+(0.002114206871939033)*TSLAG(xgap2,2)+
+(0.0002481445696860439)*TSLAG(xgap2,3)+
+(-0.0007464054935481564)*ptr+
+(0.002744349582394016)*rtr+
+(0.002708245687651875)*yhgap+
+(0.0006793788749861876)*TSLAG(yhgap)+
+(0.0003089861693518611)*TSLAG(yhgap,2)+
+(-0.00006935116601571522)*TSLAG(yhgap,3)+
+(0.001837608113293888)*yhtgap+
+(0.0005096499176820247)*TSLAG(yhtgap)+
+(0.00009470842999385746)*TSLAG(yhtgap,2)+
+(0.00024263888389989)*TSLAG(yhtgap,3)+
+(0.9999999999999932)*LOG(zyhtst*zyhst*xgdpt)
+
+$-----------------------------------------------
+$Expectations
+$Expected trend share of transfer income in household income
+IDENTITY> zyhtst
+EQ> LOG(zyhtst)=
+LOG(TSLAG(zyhtst))+
+(0.05)*TSLAG(yhtgap)/100
+
+$-----------------------------------------------
+$Expectations
+$Expected rate of growth of target real dividends, for YNIDN eq. (VAR exp.)
+IDENTITY> zynid
+EQ> zynid=
+(0.0000000000000005206855405139395)+
+(-0.0001020778460719867)*TSLAG(picnia)+
+(0.0003486952052516843)*TSLAG(picnia,2)+
+(0.0002522503063284875)*TSLAG(picnia,3)+
+(0.0002059799369104374)*TSLAG(picnia,4)+
+(0.000352649102886596)*TSLAG(rff)+
+(-0.0009117152893301089)*TSLAG(rff,2)+
+(-0.0008332522818027586)*TSLAG(rff,3)+
+(0.0002220282051739009)*TSLAG(rff,4)+
+(0.001170290263072301)*TSLAG(rtr)+
+(-0.0007048476024184936)*TSLAG(ptr)+
+(-0.005098524468651768)*TSLAG(xgap)+
+(0.001661127416240023)*TSLAG(xgap,2)+
+(0.0006345562668170024)*TSLAG(xgap,3)+
+(0.001396819940195254)*TSLAG(xgap,4)+
+(0.002519112167658877)*TSDELTALOG(TSLAG(qynidn/pxb))+
+(0.01551673287897806)*TSDELTALOG(TSLAG(qynidn/pxb,2))+
+(0.01239948969603592)*TSDELTALOG(TSLAG(qynidn/pxb,3))+
+(-0.006974010098893951)*TSDELTALOG(TSLAG(qynidn/pxb,4))+
+(1.186101463663362)*TSLAG(hggdpt)/400
+
+
+$--------------------------------------------------------------------------
+
+$ EXOGENOUS SECTION
+
+$NAME - DESCRIPTION - PROJECTION TYPE
+$adjlegrt - Potential government employment ratio (relative to business) - 2
+$d79a - Dummy, post-1979 indicator - 2
+$d8095 - Dummy, 1980-1995 indicator - 2
+$d83 - Dummy, post-1983 indicator - 2
+$d87 - Dummy, post-1986 indicator - 2
+$ddockm - Dock strike dummy, import equation - 2
+$ddockx - Dock strike dummy, export equation - 7
+$deuc - EUC switch: 1 for including EUC, 0 for not including - 2
+$dfmprr - Dummy, Foreign monetary policy switch: Exogenous real interest rate - 2
+$dfpdbt - Fiscal policy switch: 1 for debt ratio stabilization - 2
+$dfpex - Fiscal policy switch: 1 for exogenous personal income trend tax rates - 2
+$dfpsrp - Fiscal policy switch: 1 for surplus ratio stabilization - 2
+$dglprd - Switch to control for long-run productivity growth in the government sector - 2
+$dmpalt - Monetary policy switch: MA rule - 2
+$dmpex - Monetary policy switch: exogenous federal funds rate - 2
+$dmpgen - Monetary policy switch: Generalized reaction function - 2
+$dmpintay - Monetary policy switch: inertial taylor rule - 2
+$dmprr - Monetary policy switch: exogenous real federal funds rate - 2
+$dmptay - Monetary policy switch: Taylor's reaction function - 2
+$dmptlr - Monetary policy switch: Taylor's reaction function with unemployment gap - 2
+$dmptrsh - Monetary policy threshold switch: 0 for no threshold, 1 for threshold - 2
+$drstar - RSTAR updating switch: 1 is on, 0 is off - 2
+$emptrt - Oil imports to GDP ratio (Trend) - 2
+$fpitrg - Foreign target consumer price inflation (G10) - 2
+$fpxrrt - Real exchange rate residual, trend - 2
+$ugfdbtp - Federal government debt ratio - 2
+$gfdrt - Federal government target debt-to-GDP ratio - 2
+$gfsrt - Federal government target surplus-to-GDP ratio - 2
+$gtrt - Government, trend ratio of transfer payments to GDP - 2
+$hgpcdr - Trend growth rate of price of consumer durable goods (relative to PCNIA) - 2
+$hksr - Residual growth of capital services - 10
+$jrbfi - Depreciation rate, business investment - 3
+$jrcd - Depreciation rate, consumer durables - 3
+$jrh - Depreciation rate, housing - 3
+$leuc - Emergency unemployment compensation (EUC) - 2
+$lqualt - Labor quality, trend level - 1
+$lurtrsh - Unemployment threshold - 2
+$n16 - Noninstitutional population, aged 16 and over (break adjusted) - 1
+$pcfrt - Real PCE price of food, trend - 2
+$pcstar - Target consumption price level (used in RFFGEN policy rule) - 1
+$pitarg - Target rate of consumption price inflation (used in policy reaction functions) - 2
+$pitrsh - Inflation threshold - 2
+$pkir - Price index for stock of inventories, cw (relative to PXP) - 2
+$poilrt - Price of imported oil, relative to price index for bus. sector output, trend - 2
+$pwstar - Equilibrium business price markup - 8
+$qleor - Desired ratio of employment discrepancy to the labor force - 2
+$rfffix - Federal funds rate given by fixed, pre-determined funds rate path - 2
+$rffmin - Minimum nominal funds rate (set at 0 to impose zero lower bound) - 2
+$rfnict - Residual in FNICN equation - 2
+$rfrs10 - Real foreign short-term interest rate - 2
+$rrfix - Real federal funds rate given by fixed, pre-determined real funds rate path - 2
+$t47 - Time trend, begins in 1947q1 (0 before) - 5
+$tapddp - Proportion of investment tax credit deducted from depr. base - 2
+$tdpv - Present value of depreciation allowances, BFI - 3
+$trcit - Government corporate income tax rate, trend - 2
+$trfcim - Marginal federal corporate income tax rate - 2
+$trfpm - Marginal federal personal income tax rate (at twice median family income) - 2
+$tritc - Investment tax credit for business investment - 3
+$trptx - Average tax rate for personal income tax, trend, policy setting - 2
+$trspp - Marginal S&L tax rate on personal property - 2
+$uemot - Trend in ratio of EMON to XGDEN - 3
+$ufcbr - Multiplicative factor in FCBRN identity - 3
+$ufnir - Multiplicative factor in FNIRN identity - 3
+$uftcin - Multiplicative factor in FTCIN identity - 3
+$ugfdbt - Multiplicative factor in GFDBTN identity - 3
+$upcpi - Multiplicative factor in PCPI identity - 4
+$upcpix - Multiplicative factor in PCPIX identity - 4
+$upgfl - Multiplicative factor in PGFL identity - 2
+$upgsl - Multiplicative factor in PGSL identity - 2
+$upkbfir - Multiplicative factor in PKBFIR identity - 3
+$upmp - Multiplicative factor in PMP identity - 3
+$upxb - Multiplicative factor in PXB identity - 2
+$uvbfi - Multiplicative factor in VBFI identity - 2
+$uyd - Multiplicative factor in YDN identity - 3
+$uyhibn - Multiplicative factor (Consumer interest payments to business) - 2
+$uyhln - Multiplicative factor in YHLN identity - 3
+$uyhptn - Multiplicative factor in YHPTN identity - 3
+$uyhsn - Multiplicative factor in personal saving identity (accounts for transfers to foreign - 2
+$uyhtn - Multiplicative factor in YHTN identity - 3
+$uyl - Multiplicative factor in YLN identity - 2
+$uyni - Multiplicative factor in YNIN identity - 3
+$uyp - Multiplicative factor in YPN identity - 3
+$ymsdn - Microsoft one-time dividend payout in 2004Q4 - 7
+
+END

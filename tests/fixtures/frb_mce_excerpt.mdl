@@ -1,0 +1,5 @@
+MODEL
+$ Forward-looking equation shown in the FRB/US BIMETS vignette.
+IDENTITY> zdivgr
+EQ> zdivgr=(0.009757264257434617)*TSLEAD(hgynid)+(0.9902427357425654)*TSLEAD(zdivgr)
+END

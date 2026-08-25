@@ -1,0 +1,11 @@
+MODEL
+$ Extracted from the FRB/US model distributed with BIMETS R.
+IDENTITY> dmptmax
+IF> dmptlur>=dmptpi
+EQ> dmptmax=dmptlur
+IDENTITY> dmptmax
+IF> dmptlur<dmptpi
+EQ> dmptmax=dmptpi
+IDENTITY> delrff
+EQ> delrff=TSDELTA(rff)
+END

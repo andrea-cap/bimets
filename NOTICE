@@ -1,0 +1,60 @@
+bimets — Python port
+====================
+
+This project is a Python port of BIMETS, the R package for time-series
+analysis and econometric modelling:
+
+    https://github.com/andrea-luciani/bimets
+
+The port is based on BIMETS 4.1.2 and includes adaptations of concepts, interfaces, documentation examples, test cases, and model definitions from the original project.
+
+Original BIMETS
+---------------
+
+Copyright (C) 2021-2031 Bank of Italy
+
+Original authors:
+
+    Andrea Luciani
+    Roberto Stok
+
+The original BIMETS source is licensed under the GNU General Public License,
+either version 3 of the License or, at the recipient's option, any later
+version.
+
+Bundled FRB/US example
+----------------------
+
+FRB/US was developed at the Board of Governors of the Federal Reserve System.
+The model and data under examples/frb-us-policy-shock are derived from the
+FRB__MODEL and LONGBASE datasets distributed with BIMETS R under GPL-3. BIMETS
+documents the Federal Reserve model as downloaded and converted to BIMETS MDL
+in February 2024. The bundled policy-shock exercise follows Andrea Luciani's
+R Consortium article:
+
+    https://r-consortium.org/posts/us-federal-reserve-quarterly-model-in-r/
+
+The Federal Reserve makes FRB/US equations, documentation, data, and simulation
+programs publicly downloadable at:
+
+    https://www.federalreserve.gov/econres/us-models-about.htm
+
+Only the observations required to initialize and run the bundled
+2040Q1--2045Q4 simulation are retained; they span 2036Q1--2045Q4. No retained
+model equation or observation has been modified.
+
+Python port
+-----------
+
+The Python implementation contains modifications and new material created
+from 2026 onward. Copyright in original or adapted BIMETS material remains
+with its respective copyright holders. Copyright in new contributions remains
+with the respective contributors unless otherwise agreed.
+
+The complete Python distribution is released under the GNU General Public
+License, version 3 or (at your option) any later version. See LICENSE for the
+license terms.
+
+The names BIMETS and Bank of Italy are used for attribution and identification
+of compatibility. This project does not imply endorsement by the original
+authors or by Bank of Italy.
